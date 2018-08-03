@@ -1,0 +1,12 @@
+.idea
+*.iml
+data
+target
+.DS_Store
+.settings
+.classpath
+.project
+.springBeans
+
+private.key
+sdcnq-external.properties

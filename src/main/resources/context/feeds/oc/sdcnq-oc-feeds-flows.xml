@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+  http://www.springframework.org/schema/beans
+  http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+  <!-- FEEDS FLOWS -->
+  <import resource="st1/sdcnq-oc-feed-st1-flow.xml" />
+  <import resource="st1/sdcnq-oc-feed-st1-forward-flow.xml" />
+
+  <import resource="sdcnq-oc-feed-error-flow.xml" />
+</beans>

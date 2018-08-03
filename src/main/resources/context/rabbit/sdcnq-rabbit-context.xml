@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+  xsi:schemaLocation="http://www.springframework.org/schema/rabbit
+  http://www.springframework.org/schema/rabbit/spring-rabbit-1.3.xsd
+  http://www.springframework.org/schema/beans
+  http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+
+  <bean id="aMQPAddressesProvider" class="ptv.feed.sdc.sender.config.AddressProviderImpl">
+    <property name="address" value="${rabbit.addresses}" />
+  </bean>
+
+  <import resource="sdcnq-rabbit-oc-context.xml" />
+
+  <rabbit:connection-factory id="sdcnqConsumerConnectionFactory" addresses="#{aMQPAddressesProvider.getAddress()}"
+                             publisher-confirms="false" publisher-returns="false" channel-cache-size="20"
+                             username="${sportsdata-consolidation.rabbit.username}" password="#{decrypter.decryptFromBase64String(keyProvider,'${sportsdata-consolidation.rabbit.password}')}"
+                             virtual-host="${sportsdata-consolidation.rabbit.virtual.host}" />
+
+  <rabbit:admin id="sdcnqRabbitAdmin" connection-factory="sdcnqConsumerConnectionFactory" />
+
+  <rabbit:template id="sdcnqRabbitTemplate" connection-factory="sdcnqConsumerConnectionFactory" />
+
+  <!-- OC -->
+  <rabbit:direct-exchange name="${exc.sdc.oc}" declared-by="sdcnqRabbitAdmin">
+    <rabbit:bindings>
+      <rabbit:binding queue="${que.sdc.oc.st1}" key="${routing.oc.soccer.st1}" />
+    </rabbit:bindings>
+  </rabbit:direct-exchange>
+
+  <rabbit:topic-exchange name="${exc.sdc.oc.dead.letter}" declared-by="sdcnqRabbitAdmin">
+    <rabbit:bindings>
+      <rabbit:binding queue="${que.sdc.oc.dead.letter}" pattern="#" />
+    </rabbit:bindings>
+  </rabbit:topic-exchange>
+
+  <rabbit:queue name="${que.sdc.oc.dead.letter}" declared-by="sdcnqRabbitAdmin">
+    <rabbit:queue-arguments>
+      <entry key="x-message-ttl">
+        <value type="java.lang.Long">${que.sdc.oc.dead.letter.ttl}</value>
+      </entry>
+      <entry key="x-dead-letter-exchange" value="${exc.sdc.oc}" />
+      <entry key="x-ha-policy">
+        <value type="java.lang.String">all</value>
+      </entry>
+    </rabbit:queue-arguments>
+  </rabbit:queue>
+
+  <rabbit:queue name="${que.sdc.oc.st1}" declared-by="sdcnqRabbitAdmin">
+    <rabbit:queue-arguments>
+      <entry key="x-ha-policy">
+        <value type="java.lang.String">all</value>
+      </entry>
+    </rabbit:queue-arguments>
+  </rabbit:queue>
+
+  <!--SENDER -->
+  <rabbit:topic-exchange id="senderExchange" name="${exc.sender}" durable="true">
+
+  </rabbit:topic-exchange>
+
+</beans>

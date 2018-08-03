@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:int="http://www.springframework.org/schema/integration"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/integration
+  http://www.springframework.org/schema/integration/spring-integration.xsd
+  http://www.springframework.org/schema/beans
+  http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+  <int:chain id="removeMessageFromMessageStore" input-channel="remove-message-from-store-channel"
+    output-channel="drop-channel">
+    <int:filter expression="headers.containsKey('storedMessageId')" />
+    <int:transformer expression="headers.storedMessageId" />
+    <int:service-activator ref="messageStore" method="removeMessage" />
+  </int:chain>
+
+  <int:bridge input-channel="drop-channel" output-channel="nullChannel"></int:bridge>
+
+  <!-- MessageStore definition storing payload using in memory map -->
+  <bean id="simpleMessageStore" class="org.springframework.integration.store.SimpleMessageStore" />
+
+  <bean id="messageStore" class="ptv.feed.sdc.sender.messaging.MessageStoreLoggingWrapper">
+    <constructor-arg name="messageStore" ref="simpleMessageStore" />
+  </bean>
+
+  <bean id="messagePayloadTransformer" class="ptv.feed.sdc.sender.context.MessagePayloadTransformer" />
+
+  <bean id="customObjectMapper" class="ptv.feed.sdc.sender.mapper.ObjectMapperFactory" factory-method="getMapper" />
+
+</beans>

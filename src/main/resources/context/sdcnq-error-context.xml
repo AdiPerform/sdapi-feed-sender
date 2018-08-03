@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:int="http://www.springframework.org/schema/integration"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/integration
+  http://www.springframework.org/schema/integration/spring-integration.xsd
+  http://www.springframework.org/schema/beans
+  http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+  <!--Error handling -->
+  <int:publish-subscribe-channel id="invalidMessageChannel" />
+
+  <int:service-activator id="errorLogger" input-channel="invalidMessageChannel"
+    output-channel="remove-message-from-store-channel" ref="messageLogger" method="logAndUnwrap" />
+
+  <bean id="messageLogger" class="ptv.feed.sdc.sender.error.MessageLogger"/>
+
+</beans>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+                      http://www.springframework.org/schema/beans/spring-beans.xsd
+                      http://www.springframework.org/schema/context
+                      http://www.springframework.org/schema/context/spring-context.xsd">
+
+  <context:property-placeholder location="classpath:/config/sdcnq.properties"
+    ignore-unresolvable="true" />
+  <context:property-placeholder location="classpath:/config/sdcnq-oc.properties"
+    ignore-unresolvable="true" />
+  <context:property-placeholder location="classpath:/sdcnq-external.properties"
+    ignore-unresolvable="true" />
+
+  <!-- Internal -->
+  <import resource="sdcnq-commons-context.xml" />
+  <import resource="rabbit/sdcnq-rabbit-context.xml" />
+  <import resource="sdcnq-sender-context.xml" />
+  <import resource="sdcnq-error-context.xml" />
+  <import resource="sdcnq-tracking-context.xml" />
+  <import resource="sdcnq-jmx-context.xml" />
+
+  <!-- OC FEEDS FLOWS -->
+  <import resource="feeds/oc/sdcnq-oc-feeds-flows.xml" />
+
+
+  <!-- External -->
+  <import resource="classpath:nq-api-context.xml" />
+
+</beans>

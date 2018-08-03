@@ -1,0 +1,672 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>ptv.feed.sdc</groupId>
+  <artifactId>feed-sender</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+  <name>Feed Sender distribution module</name>
+
+  <scm>
+    <connection>scm:git:ssh://git@github.com:AdiPerform/sdapi-feed-sender.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com:AdiPerform/sdapi-feed-sender.git</developerConnection>
+    <url>https://github.com/AdiPerform/sdapi-feed-sender.git</url>
+  </scm>
+
+  <ciManagement>
+    <url>https://jenkins2.performgroup.com/job/sdapi.feed.sender/</url>
+  </ciManagement>
+
+  <issueManagement>
+    <url>https://jira2.performgroup.com</url>
+  </issueManagement>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <java.version>1.8</java.version>
+
+  <!-- below taken from soccer parent pom -->
+
+    <nq.api.version>4.27.2</nq.api.version>
+    <sa.version>5.0.3</sa.version>
+    <ltc.client.version>3.0.0</ltc.client.version>
+    <sdc.es.version>5.2.3</sdc.es.version>
+    <!--TODO: <sdc.es.version>4.1.3</sdc.es.version>-->
+    <sdc.shared.version>5.2.28</sdc.shared.version>
+    <sdc.shared.test.version>5.0.4</sdc.shared.test.version>
+    <sdc.translations.version>5.0.2</sdc.translations.version>
+    <pf.library.version>5.9.2</pf.library.version>
+
+    <elasticsearch.version>5.2.2</elasticsearch.version>
+    <version.servlet.api>3.0.1</version.servlet.api>
+    <groovy.all.version>2.4.3</groovy.all.version>
+    <spock.version>1.0-groovy-2.4</spock.version>
+    <gmaven.version>1.5</gmaven.version>
+    <lmax.disruptor.version>3.3.0</lmax.disruptor.version>
+    <slf4j.version>1.7.25</slf4j.version>
+    <log4j.version>2.8.2</log4j.version>
+    <junit.version>4.11</junit.version>
+    <unitils.version>3.3</unitils.version>
+    <com.vividsolutions.version>1.12</com.vividsolutions.version>
+    <spring.version>4.1.3.RELEASE</spring.version>
+
+    <spring.data.elasticsearch.version>2.1.6.RELEASE</spring.data.elasticsearch.version>
+    <spring.integration.version>4.0.2.RELEASE</spring.integration.version>
+    <spring.amqp.version>1.3.4.RELEASE</spring.amqp.version>
+
+    <jackson.version>2.6.0</jackson.version>
+    <jackson.jaxb.annotations.version>2.6.0</jackson.jaxb.annotations.version>
+    <jackson.datatype.joda.version>2.6.0</jackson.datatype.joda.version>
+    <cglib.version>2.2</cglib.version>
+    <aspectj.version>1.8.1</aspectj.version>
+    <snakeyaml.version>1.13</snakeyaml.version>
+    <reflections.version>0.9.8</reflections.version>
+    <commons.io.version>2.0.1</commons.io.version>
+    <version.commons.lang>2.6</version.commons.lang>
+    <owasp.html.sanitizer.version>r117</owasp.html.sanitizer.version>
+    <joda.version>2.1</joda.version>
+    <guava.version>17.0</guava.version>
+    <apache.httpclient.version>4.5.2</apache.httpclient.version>
+    <mysql.version>5.1.34</mysql.version>
+    <xmlunit.version>1.5</xmlunit.version>
+    <wiremock.version>1.57</wiremock.version>
+    <awaitility.version>1.7.0</awaitility.version>
+    <modelmapper.version>0.7.4</modelmapper.version>
+    <mock-aerospike-java>0.0.4</mock-aerospike-java>
+    <assertj.version>3.6.2</assertj.version>
+    <jsoup.version>1.10.2</jsoup.version>
+    <mapstruct.version>1.2.0.Final</mapstruct.version>
+
+
+  </properties>
+
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+      </resource>
+      <resource>
+        <directory>${project.basedir}/src/main/resources</directory>
+      </resource>
+      <resource>
+        <directory>../../../pf-configurations</directory>
+      </resource>
+    </resources>
+    <testResources>
+      <testResource>
+        <directory>${project.basedir}/src/main/resources</directory>
+      </testResource>
+      <testResource>
+        <directory>${project.basedir}/src/test/resources</directory>
+      </testResource>
+      <testResource>
+        <directory>../../../pf-configurations</directory>
+      </testResource>
+    </testResources>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.18.1</version>
+        <executions>
+          <execution>
+            <id>default-test</id>
+            <configuration>
+              <forkCount>4</forkCount>
+              <reuseForks>true</reuseForks>
+              <includes>
+                <include>**/*Test.class</include>
+              </includes>
+            </configuration>
+          </execution>
+          <execution>
+            <id>it-test</id>
+            <phase>test</phase>
+            <goals>
+              <goal>test</goal>
+            </goals>
+            <configuration>
+              <forkCount>1</forkCount>
+              <reuseForks>false</reuseForks>
+              <testFailureIgnore>false</testFailureIgnore>
+              <argLine>-Xmx1g</argLine>
+              <includes>
+                <include>**/*IT.class</include>
+              </includes>
+              <excludes>
+                <exclude>**/*SystemIT.java</exclude>
+              </excludes>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencies>
+    <!-- below taken from soccer parent pom -->
+     <dependency>
+        <groupId>ptv.feed</groupId>
+        <artifactId>pf-library-1.3</artifactId>
+        <version>${pf.library.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch</artifactId>
+          </exclusion>
+          <exclusion>
+            <artifactId>servlet-api</artifactId>
+            <groupId>javax.servlet</groupId>
+          </exclusion>
+          <exclusion>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+
+      <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>javax.servlet-api</artifactId>
+        <version>${version.servlet.api}</version>
+        <scope>provided</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.elasticsearch</groupId>
+        <artifactId>elasticsearch</artifactId>
+        <version>${elasticsearch.version}</version>
+      </dependency>
+      <!-- LTC Client -->
+      <dependency>
+        <groupId>ptv.feed</groupId>
+        <artifactId>ltc-client</artifactId>
+        <version>${ltc.client.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <!-- SDC ES -->
+      <dependency>
+        <groupId>ptv.feed.sdc</groupId>
+        <artifactId>sdc-es</artifactId>
+        <version>${sdc.es.version}</version>
+      </dependency>
+      <!-- SDC Shared -->
+      <dependency>
+        <groupId>ptv.feed.sdc.shared</groupId>
+        <artifactId>sdc-api</artifactId>
+        <version>${sdc.shared.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>ptv.feed.sdc.shared</groupId>
+        <artifactId>sdc-core</artifactId>
+        <version>${sdc.shared.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>ptv.feed.sdc.shared</groupId>
+        <artifactId>sdc-translation</artifactId>
+        <version>${sdc.shared.version}</version>
+      </dependency>
+      <!-- SDC Shared Test -->
+
+    <dependency>
+      <groupId>org.apache.qpid</groupId>
+      <artifactId>qpid-broker</artifactId>
+      <version>0.28</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>slf4j-log4j12</artifactId>
+          <groupId>org.slf4j</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>log4j</artifactId>
+          <groupId>log4j</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+        <groupId>ptv.feed.sdc.shared-test</groupId>
+        <artifactId>sdc-test-es-dsl</artifactId>
+        <version>${sdc.shared.test.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>ptv.feed.sdc.shared-test</groupId>
+        <artifactId>sdc-test-rabbitmq-dsl</artifactId>
+        <version>${sdc.shared.test.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>ptv.feed.sdc.shared-test</groupId>
+        <artifactId>sdc-test-ac-dsl</artifactId>
+        <version>${sdc.shared.test.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <!-- SDC Translations -->
+      <dependency>
+        <groupId>ptv.feed.sdc.translations</groupId>
+        <artifactId>sdc-translations-client</artifactId>
+        <version>${sdc.translations.version}</version>
+      </dependency>
+      <!-- PF -->
+      <dependency>
+        <groupId>ptv.feed</groupId>
+        <artifactId>nq-api-1.3</artifactId>
+        <version>${nq.api.version}</version>
+      </dependency>
+      <!--SPRING -->
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-test</artifactId>
+        <version>${spring.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-oxm</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-core</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-web</artifactId>
+        <version>${spring.version}</version>
+        <scope>compile</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-beans</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+        <version>${spring.version}</version>
+        <scope>compile</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.integration</groupId>
+        <artifactId>spring-integration-core</artifactId>
+        <version>${spring.integration.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.integration</groupId>
+        <artifactId>spring-integration-xml</artifactId>
+        <version>${spring.integration.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.integration</groupId>
+        <artifactId>spring-integration-jdbc</artifactId>
+        <version>${spring.integration.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-aop</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-aspects</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-jdbc</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.amqp</groupId>
+        <artifactId>spring-rabbit</artifactId>
+        <version>${spring.amqp.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.amqp</groupId>
+        <artifactId>spring-amqp</artifactId>
+        <version>${spring.amqp.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-orm</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-tx</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-lang</groupId>
+        <artifactId>commons-lang</artifactId>
+        <version>${version.commons.lang}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.springframework.integration</groupId>
+        <artifactId>spring-integration-amqp</artifactId>
+        <version>${spring.integration.version}</version>
+        <exclusions>
+          <exclusion>
+            <artifactId>spring-tx</artifactId>
+            <groupId>org.springframework</groupId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+
+      <dependency>
+        <groupId>org.springframework.integration</groupId>
+        <artifactId>spring-integration-http</artifactId>
+        <version>${spring.integration.version}</version>
+      </dependency>
+
+      <!-- OTHERS -->
+      <dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava</artifactId>
+        <version>${guava.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.httpcomponents</groupId>
+        <artifactId>httpclient</artifactId>
+        <version>${apache.httpclient.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>net.logstash.log4j</groupId>
+        <artifactId>jsonevent-layout</artifactId>
+        <version>1.7</version>
+      </dependency>
+      <dependency>
+        <groupId>org.mapstruct</groupId>
+        <artifactId>mapstruct-jdk8</artifactId>
+        <version>${mapstruct.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.mapstruct</groupId>
+        <artifactId>mapstruct-processor</artifactId>
+        <version>${mapstruct.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>ptv.feed.sa</groupId>
+        <artifactId>sa-client</artifactId>
+        <version>${sa.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>ptv.feed.sa</groupId>
+        <artifactId>sa-api</artifactId>
+        <version>${sa.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>${mysql.version}</version>
+      </dependency>
+
+      <!--LOGGING -->
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-api</artifactId>
+        <version>${log4j.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-core</artifactId>
+        <version>${log4j.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-slf4j-impl</artifactId>
+        <version>${log4j.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-web</artifactId>
+        <version>${log4j.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-1.2-api</artifactId>
+        <version>${log4j.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.lmax</groupId>
+        <artifactId>disruptor</artifactId>
+        <version>${lmax.disruptor.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-collections4</artifactId>
+        <version>4.1</version>
+      </dependency>
+
+      <!--TEST -->
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>${junit.version}</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.spockframework</groupId>
+        <artifactId>spock-core</artifactId>
+        <version>${spock.version}</version>
+        <scope>test</scope>
+        <!--to avoid conflict with eclipse groovy plugin compiler with spock dependency -->
+        <exclusions>
+          <exclusion>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+
+      <dependency>
+        <groupId>org.spockframework</groupId>
+        <artifactId>spock-spring</artifactId>
+        <version>${spock.version}</version>
+        <scope>test</scope>
+        <exclusions>
+          <exclusion>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+
+      <dependency>
+        <groupId>org.codehaus.groovy</groupId>
+        <artifactId>groovy-all</artifactId>
+        <version>${groovy.all.version}</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.unitils</groupId>
+        <artifactId>unitils-core</artifactId>
+        <version>${unitils.version}</version>
+        <scope>test</scope>
+        <exclusions>
+          <exclusion>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+
+      <dependency>
+        <groupId>xmlunit</groupId>
+        <artifactId>xmlunit</artifactId>
+        <version>${xmlunit.version}</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>com.vividsolutions</groupId>
+        <artifactId>jts</artifactId>
+        <version>${com.vividsolutions.version}</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>cglib</groupId>
+        <artifactId>cglib</artifactId>
+        <version>${cglib.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.aspectj</groupId>
+        <artifactId>aspectjrt</artifactId>
+        <version>${aspectj.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.aspectj</groupId>
+        <artifactId>aspectjtools</artifactId>
+        <version>${aspectj.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.yaml</groupId>
+        <artifactId>snakeyaml</artifactId>
+        <version>${snakeyaml.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.reflections</groupId>
+        <artifactId>reflections</artifactId>
+        <version>${reflections.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-core</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.fasterxml.jackson.module</groupId>
+        <artifactId>jackson-module-jaxb-annotations</artifactId>
+        <version>${jackson.jaxb.annotations.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.fasterxml.jackson.datatype</groupId>
+        <artifactId>jackson-datatype-joda</artifactId>
+        <version>${jackson.datatype.joda.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>commons-io</groupId>
+        <artifactId>commons-io</artifactId>
+        <version>${commons.io.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>owasp-java-html-sanitizer</groupId>
+        <artifactId>owasp-java-html-sanitizer</artifactId>
+        <version>${owasp.html.sanitizer.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>joda-time</groupId>
+        <artifactId>joda-time</artifactId>
+        <version>${joda.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.github.tomakehurst</groupId>
+        <artifactId>wiremock</artifactId>
+        <version>${wiremock.version}</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.modelmapper</groupId>
+        <artifactId>modelmapper</artifactId>
+        <version>${modelmapper.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.jayway.awaitility</groupId>
+        <artifactId>awaitility</artifactId>
+        <version>${awaitility.version}</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>com.github.srini156</groupId>
+        <artifactId>mock-aerospike-java</artifactId>
+        <version>${mock-aerospike-java}</version>
+        <scope>test</scope>
+        <exclusions>
+          <exclusion>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+
+      <dependency>
+        <groupId>org.assertj</groupId>
+        <artifactId>assertj-core</artifactId>
+        <version>${assertj.version}</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.locationtech.spatial4j</groupId>
+        <artifactId>spatial4j</artifactId>
+        <version>0.6</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.jsoup</groupId>
+        <artifactId>jsoup</artifactId>
+        <version>${jsoup.version}</version>
+      </dependency>
+
+
+
+
+
+
+
+  </dependencies>
+
+</project>

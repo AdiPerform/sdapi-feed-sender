@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:int="http://www.springframework.org/schema/integration"
+  xmlns:rabbit="http://www.springframework.org/schema/rabbit" xmlns:int-amqp="http://www.springframework.org/schema/integration/amqp"
+  xmlns:int-xml="http://www.springframework.org/schema/integration/xml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+                  http://www.springframework.org/schema/beans/spring-beans.xsd
+                  http://www.springframework.org/schema/integration
+                  http://www.springframework.org/schema/integration/spring-integration.xsd
+                  http://www.springframework.org/schema/integration/amqp
+                  http://www.springframework.org/schema/integration/amqp/spring-integration-amqp.xsd
+                  http://www.springframework.org/schema/integration/xml
+                  http://www.springframework.org/schema/integration/xml/spring-integration-xml.xsd
+                  http://www.springframework.org/schema/rabbit
+                  http://www.springframework.org/schema/rabbit/spring-rabbit-1.3.xsd
+                  http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+  <context:property-placeholder />
+
+  <rabbit:admin id="sdcnqRabbitAdmin" connection-factory="sdcnqConsumerConnectionFactory" />
+
+  <rabbit:topic-exchange name="${sender.exchange}" declared-by="sdcnqRabbitAdmin">
+    <rabbit:bindings>
+      <!-- Msgs addressed to specific cloud -->
+      <rabbit:binding queue="${sender.queue}" pattern="${sender.binding}" />
+      <!-- Msgs addressed to all clouds -->
+      <rabbit:binding queue="${sender.queue}" pattern="${sender.binding.allClouds}" />
+      <!-- Msgs addressed to this cloud from error channel -->
+      <rabbit:binding queue="${sender.queue}" pattern="${sender.host}" />
+    </rabbit:bindings>
+  </rabbit:topic-exchange>
+
+  <rabbit:queue name="${sender.queue}" exclusive="false" declared-by="sdcnqRabbitAdmin">
+    <rabbit:queue-arguments>
+      <entry key="x-ha-policy">
+        <value type="java.lang.String">all</value>
+      </entry>
+    </rabbit:queue-arguments>
+  </rabbit:queue>
+
+  <!-- Error handling rabbit config -->
+  <rabbit:topic-exchange name="${sender.exchange.error}" declared-by="sdcnqRabbitAdmin">
+    <rabbit:bindings>
+      <rabbit:binding queue="${sender.queue.error}" pattern="${sender.host}" />
+      <rabbit:binding queue="${sender.queue.error.undelivered}" pattern="${sender.host}.death" />
+    </rabbit:bindings>
+  </rabbit:topic-exchange>
+
+  <rabbit:queue name="${sender.queue.error}" declared-by="sdcnqRabbitAdmin" exclusive="${sender.queue.error.exclusive}">
+    <rabbit:queue-arguments>
+      <entry key="x-dead-letter-exchange" value="${sender.exchange}" />
+      <entry key="x-ha-policy">
+        <value type="java.lang.String">all</value>
+      </entry>
+    </rabbit:queue-arguments>
+  </rabbit:queue>
+
+  <rabbit:queue name="${sender.queue.error.undelivered}" declared-by="sdcnqRabbitAdmin" exclusive="${sender.queue.error.exclusive}">
+    <rabbit:queue-arguments>
+      <entry key="x-ha-policy">
+        <value type="java.lang.String">all</value>
+      </entry>
+    </rabbit:queue-arguments>
+  </rabbit:queue>
+
+  <int-amqp:inbound-channel-adapter id="senderAdapter" queue-names="${sender.queue}"
+    connection-factory="sdcnqConsumerConnectionFactory" channel="inputSenderChannel" acknowledge-mode="AUTO"
+    error-channel="failedSenderMessages" mapped-request-headers="*" concurrent-consumers="10" />
+
+  <int:channel id="inputSenderChannel" />
+
+  <int:chain input-channel="inputSenderChannel">
+    <int:header-filter header-names="x-received-from" />
+    <int:header-enricher>
+      <int:header name="cloud" value="${sender.host}" />
+    </int:header-enricher>
+
+    <!-- the value of x-death header is List and cannot be cast to String delegates method where the parameter is Map<String, String> -->
+    <int:header-filter header-names="x-death" />
+
+    <int:header-value-router header-name="json__TypeId__" default-output-channel="invalidMessageChannel">
+      <int:mapping value="st1" channel="st1Channel" />
+    </int:header-value-router>
+  </int:chain>
+
+
+  <int:channel id="st1Channel" />
+
+
+  <int:chain input-channel="st1Channel" output-channel="st1UpdateChannel">
+    <int:transformer ref="messagePayloadTransformer" /> <!-- byte[] to String -->
+  </int:chain>
+
+  <int:channel id="st1UpdateChannel" />
+
+  <int:service-activator input-channel="st1UpdateChannel"
+                         expression="@st1Delegate.updateSt1(payload, headers)" />
+
+  <bean id="requestFactory" class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory">
+    <property name="connectTimeout" value="${sender.request.connect.timeout}" />
+    <property name="readTimeout" value="${sender.request.read.timeout}" />
+  </bean>
+  <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+    <constructor-arg name="requestFactory" ref="requestFactory" />
+  </bean>
+  <bean id="abstractRestServiceDelegateModel" class="ptv.feed.sdc.soccer.api.delegate.AbstractRestServiceDelegate" abstract="true">
+    <constructor-arg name="restTemplate" ref="restTemplate" />
+    <constructor-arg name="formatConverter" ref="formatConverterModel" />
+    <constructor-arg name="url" value="${sender.url}${sender.context.path}" />
+    <constructor-arg name="httpStatusesToRequeue">
+      <list>
+        <value>SERVICE_UNAVAILABLE</value>
+      </list>
+    </constructor-arg>
+  </bean>
+  <bean id="abstractRestServiceDelegateString" class="ptv.feed.sdc.soccer.api.delegate.AbstractRestServiceDelegate" abstract="true">
+    <constructor-arg name="restTemplate" ref="restTemplate" />
+    <constructor-arg name="formatConverter" ref="formatConverterString" />
+    <constructor-arg name="url" value="${sender.url}${sender.context.path}" />
+    <constructor-arg name="httpStatusesToRequeue">
+      <list>
+        <value>SERVICE_UNAVAILABLE</value>
+      </list>
+    </constructor-arg>
+  </bean>
+  <bean id="abstractRestServiceDelegateValde" class="ptv.feed.sdc.soccer.api.delegate.AbstractRestServiceDelegate" abstract="true">
+    <constructor-arg name="restTemplate" ref="restTemplate" />
+    <constructor-arg name="formatConverter" ref="formatConverterString" />
+    <constructor-arg name="url" value="${sender.url}${valde.sender.context.path}" />
+    <constructor-arg name="httpStatusesToRequeue">
+      <list>
+        <value>SERVICE_UNAVAILABLE</value>
+      </list>
+    </constructor-arg>
+  </bean>
+  <bean id="st1Delegate" class="ptv.feed.sdc.sender.valdeFromSoccer.delegate.St1ServiceDelegateImpl" parent="abstractRestServiceDelegateValde" />
+</beans>
