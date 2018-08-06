@@ -1,11 +1,11 @@
-package ptv.feed.sdc.sender.valdeFromSoccer.delegate;
+package ptv.feed.sdc.sender.valde.delegate;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.RestTemplate;
-import ptv.feed.sdc.sender.valdeFromSoccer.converter.FormatConverter;
-import ptv.feed.sdc.sender.valdeFromSoccer.enums.ValdeHeaders;
-import ptv.feed.sdc.sender.valdeFromSoccer.exceptions.InfrastructureException;
-import ptv.feed.sdc.sender.valdeFromSoccer.exceptions.ServiceException;
+import ptv.feed.sdc.sender.messaging.FormatConverter;
+import ptv.feed.sdc.sender.valde.enums.ValdeHeaders;
+import ptv.feed.sdc.sender.exceptions.InfrastructureException;
+import ptv.feed.sdc.sender.exceptions.ServiceException;
 
 import java.net.URL;
 import java.util.List;

@@ -10,7 +10,7 @@ import org.springframework.messaging.support.ErrorMessage
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.ContextConfiguration
 import ptv.feed.sdc.shared.api.util.ResourceUtils
-import ptv.feed.sdc.sender.valdeFromSoccer.enums.OcPushHeaders
+import ptv.feed.sdc.sender.oc.enums.OcPushHeaders
 import ptv.feed.sdc.sender.spec.ConsumerBaseSpecification
 import ptv.feed.sdc.sender.spring.LifecycleSupportingXmlContextLoader
 

@@ -1,4 +1,4 @@
-package ptv.feed.sdc.sender.valdeFromSoccer.delegate;
+package ptv.feed.sdc.sender.valde.delegate;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -10,9 +10,9 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
-import ptv.feed.sdc.sender.valdeFromSoccer.converter.FormatConverter;
-import ptv.feed.sdc.sender.valdeFromSoccer.exceptions.InfrastructureException;
-import ptv.feed.sdc.sender.valdeFromSoccer.exceptions.ServiceException;
+import ptv.feed.sdc.sender.messaging.FormatConverter;
+import ptv.feed.sdc.sender.exceptions.InfrastructureException;
+import ptv.feed.sdc.sender.exceptions.ServiceException;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -20,8 +20,8 @@ import java.nio.charset.Charset;
 import java.util.*;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static ptv.feed.sdc.sender.valdeFromSoccer.enums.ValdeHeaders.VALDE_HEADERS_PREFIX;
-import static ptv.feed.sdc.sender.valdeFromSoccer.enums.ValdeHeaders.VALDE_HEADERS_REGEX;
+import static ptv.feed.sdc.sender.valde.enums.ValdeHeaders.VALDE_HEADERS_PREFIX;
+import static ptv.feed.sdc.sender.valde.enums.ValdeHeaders.VALDE_HEADERS_REGEX;
 import static ptv.feed.sdc.shared.api.delegate.AbstractRestServiceDelegate.STAMP_UUID_HDR_NAME;
 
 public abstract class AbstractRestServiceDelegate {

@@ -1,4 +1,4 @@
-package ptv.feed.sdc.sender.valdeFromSoccer.enums;
+package ptv.feed.sdc.sender.valde.enums;
 
 public enum ValdeHeaders {
   VALDE_VERSION("valde_version"),

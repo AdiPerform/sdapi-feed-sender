@@ -23,8 +23,6 @@
     <rabbit:bindings>
       <!-- Msgs addressed to specific cloud -->
       <rabbit:binding queue="${sender.queue}" pattern="${sender.binding}" />
-      <!-- Msgs addressed to all clouds -->
-      <rabbit:binding queue="${sender.queue}" pattern="${sender.binding.allClouds}" />
       <!-- Msgs addressed to this cloud from error channel -->
       <rabbit:binding queue="${sender.queue}" pattern="${sender.host}" />
     </rabbit:bindings>
@@ -104,7 +102,7 @@
     <constructor-arg name="requestFactory" ref="requestFactory" />
   </bean>
 
-  <bean id="abstractRestServiceDelegate" class="ptv.feed.sdc.sender.valdeFromSoccer.delegate.AbstractRestServiceDelegate" abstract="true">
+  <bean id="abstractRestServiceDelegate" class="ptv.feed.sdc.sender.valde.delegate.AbstractRestServiceDelegate" abstract="true">
     <constructor-arg name="restTemplate" ref="restTemplate" />
     <constructor-arg name="formatConverter" ref="formatConverterString" />
     <constructor-arg name="url" value="${sender.url}${valde.sender.context.path}" />
@@ -114,5 +112,5 @@
       </list>
     </constructor-arg>
   </bean>
-  <bean id="st1Delegate" class="ptv.feed.sdc.sender.valdeFromSoccer.delegate.St1ServiceDelegateImpl" parent="abstractRestServiceDelegate" />
+  <bean id="st1Delegate" class="ptv.feed.sdc.sender.valde.delegate.St1ServiceDelegateImpl" parent="abstractRestServiceDelegate" />
 </beans>

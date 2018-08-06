@@ -21,7 +21,7 @@
   <import resource="sdcnq-tracking-context.xml" />
 
   <!-- OC FEEDS FLOWS -->
-  <import resource="feeds/oc/sdcnq-oc-feeds-flows.xml" />
+  <import resource="feeds/sdcnq-oc-feeds-flows.xml" />
 
 
   <!-- External -->

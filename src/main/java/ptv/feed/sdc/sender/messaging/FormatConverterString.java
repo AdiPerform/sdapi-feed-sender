@@ -1,4 +1,4 @@
-package ptv.feed.sdc.sender.valdeFromSoccer.converter;
+package ptv.feed.sdc.sender.messaging;
 
 public class FormatConverterString implements FormatConverter {
 

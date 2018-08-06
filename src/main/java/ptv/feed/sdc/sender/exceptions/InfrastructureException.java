@@ -1,4 +1,4 @@
-package ptv.feed.sdc.sender.valdeFromSoccer.exceptions;
+package ptv.feed.sdc.sender.exceptions;
 
 public class InfrastructureException extends Exception {
 

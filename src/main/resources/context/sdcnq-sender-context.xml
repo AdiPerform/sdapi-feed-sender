@@ -15,7 +15,7 @@
                   http://www.springframework.org/schema/rabbit
                   http://www.springframework.org/schema/rabbit/spring-rabbit.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-  <bean id="formatConverterString" class="ptv.feed.sdc.sender.valdeFromSoccer.converter.FormatConverterString" />
+  <bean id="formatConverterString" class="ptv.feed.sdc.sender.messaging.FormatConverterString" />
   
   <bean id="httpCloudAddressesProvider" class="ptv.feed.sdc.sender.config.AddressProviderImpl">
   	<property name="address" value="${cloud.urls}" />
@@ -37,7 +37,6 @@
     <property name="senderExchangeError" value="${exc.sender.error}" />
     <property name="senderQueuePrefix" value="${que.sender.prefix}" />
     <property name="senderQueueErrorExclusive" value="${que.sender.error.exclusive}" />
-    <property name="allCloudsBinding" value="${sender.binding.allClouds}" />
     <property name="configLocations" value="${sender.configLocations}" />
     <property name="cloudRequestConnectTimeout" value="${cloud.request.connect.timeout}" />
     <property name="cloudRequestReadTimeout" value="${cloud.request.read.timeout}" />

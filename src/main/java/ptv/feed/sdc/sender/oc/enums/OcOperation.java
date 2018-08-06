@@ -1,4 +1,4 @@
-package ptv.feed.sdc.sender.valdeFromSoccer.enums;
+package ptv.feed.sdc.sender.oc.enums;
 
 public enum OcOperation {
   DELETE("delete");

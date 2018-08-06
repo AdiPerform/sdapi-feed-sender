@@ -5,8 +5,8 @@
   http://www.springframework.org/schema/beans/spring-beans.xsd">
 
   <!-- FEEDS FLOWS -->
-  <import resource="st1/sdcnq-oc-feed-st1-flow.xml" />
-  <import resource="st1/sdcnq-oc-feed-st1-forward-flow.xml" />
+  <import resource="valde/st1/sdcnq-oc-feed-st1-flow.xml" />
+  <import resource="valde/st1/sdcnq-oc-feed-st1-forward-flow.xml" />
 
   <import resource="sdcnq-oc-feed-error-flow.xml" />
 </beans>

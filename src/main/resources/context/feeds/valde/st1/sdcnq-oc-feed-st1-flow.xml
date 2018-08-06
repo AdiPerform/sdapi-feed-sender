@@ -19,17 +19,17 @@
                                     mapped-request-headers="valde_*,oc_*,X-*,stamp_uuid,last_updated,amqp_receivedRoutingKey"
                                     channel="st1Channel" error-channel="invalidMessageChannel"/>
 
-  <util:set id="valdeRequiredHeaders" value-type="ptv.feed.sdc.sender.valdeFromSoccer.enums.ValdeHeaders">
+  <util:set id="valdeRequiredHeaders" value-type="ptv.feed.sdc.sender.valde.enums.ValdeHeaders">
     <value>VALDE_GAME_ID</value>
     <value>VALDE_FEED_TYPE</value>
   </util:set>
 
-  <util:set id="ocRequiredHeaders" value-type="ptv.feed.sdc.sender.valdeFromSoccer.enums.OcPushHeaders">
+  <util:set id="ocRequiredHeaders" value-type="ptv.feed.sdc.sender.oc.enums.OcPushHeaders">
     <value>OC_TYPE</value>
     <value>OC_FORMAT</value>
   </util:set>
 
-  <bean id="valdeHadersValidator" class="ptv.feed.sdc.sender.validator.ValdeRequiredHeadersValidator">
+  <bean id="valdeHadersValidator" class="ptv.feed.sdc.sender.valde.validator.ValdeRequiredHeadersValidator">
     <constructor-arg name="valdeRequiredHeaders" ref="valdeRequiredHeaders" />
     <constructor-arg name="ocRequiredHeaders" ref="ocRequiredHeaders" />
   </bean>

@@ -1,19 +1,18 @@
-package ptv.feed.sdc.sender.validator;
+package ptv.feed.sdc.sender.valde.validator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.integration.annotation.Filter;
 import org.springframework.messaging.Message;
 import ptv.feed.sdc.sender.messaging.MessageStamper;
-import ptv.feed.sdc.sender.valdeFromSoccer.enums.OcPushHeaders;
-import ptv.feed.sdc.sender.valdeFromSoccer.enums.ValdeHeaders;
+import ptv.feed.sdc.sender.oc.enums.OcPushHeaders;
+import ptv.feed.sdc.sender.valde.enums.ValdeHeaders;
 
 import java.util.Set;
 
 import static java.lang.String.format;
 import static java.util.Optional.of;
 import static ptv.feed.sdc.sender.error.MessageLogger.logError;
-import static ptv.feed.sdc.sender.messaging.MessageStamper.getStampUuid;
 
 public class ValdeRequiredHeadersValidator {
 

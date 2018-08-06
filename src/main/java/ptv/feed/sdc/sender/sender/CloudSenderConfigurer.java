@@ -52,9 +52,6 @@ public class CloudSenderConfigurer implements ApplicationContextAware, Initializ
   /** The sender context path. */
   private transient String valdeSenderContextPath;
 
-  /** The all clouds binding. */
-  private transient String allCloudsBinding;
-
   /** The sender queue prefix. */
   private transient String senderQueuePrefix = DEFAULT_QUEUE_NAME_PREFIX;
 
@@ -137,7 +134,6 @@ public class CloudSenderConfigurer implements ApplicationContextAware, Initializ
     checkNotNull(valdeSenderContextPath);
     checkNotNull(senderExchange);
     checkNotNull(senderExchangeError);
-    checkNotNull(allCloudsBinding);
     checkNotNull(cloudUrls);
   }
 
@@ -178,7 +174,6 @@ public class CloudSenderConfigurer implements ApplicationContextAware, Initializ
     props.setProperty("sender.queue.error", senderQueuePrefix + cloudUrl.getHost() + ".error");
     props.setProperty("sender.queue.error.undelivered", senderQueuePrefix + cloudUrl.getHost() + ".error.undelivered");
     props.setProperty("sender.queue.error.exclusive", String.valueOf(senderQueueErrorExclusive));
-    props.setProperty("sender.binding.allClouds", allCloudsBinding);
     props.setProperty("sender.request.connect.timeout", String.valueOf(cloudRequestConnectTimeout));
     props.setProperty("sender.request.read.timeout", String.valueOf(cloudRequestReadTimeout));
     props.setProperty("sender.binding", cloudBindings.get(cloudUrl.getHost()));
@@ -216,15 +211,6 @@ public class CloudSenderConfigurer implements ApplicationContextAware, Initializ
     for (final String url : urls) {
       cloudUrls.add(new URI(url));
     }
-  }
-
-  /**
-   * Sets the all clouds binding.
-   *
-   * @param allCloudsBinding the new all clouds binding
-   */
-  public void setAllCloudsBinding(final String allCloudsBinding) {
-    this.allCloudsBinding = allCloudsBinding;
   }
 
   /**

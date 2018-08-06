@@ -1,4 +1,4 @@
-package ptv.feed.sdc.sender.valdeFromSoccer.exceptions;
+package ptv.feed.sdc.sender.exceptions;
 
 /**
  * The Class ServiceException.
