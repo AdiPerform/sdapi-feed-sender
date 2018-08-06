@@ -81,9 +81,7 @@
     </int:header-value-router>
   </int:chain>
 
-
   <int:channel id="st1Channel" />
-
 
   <int:chain input-channel="st1Channel" output-channel="st1UpdateChannel">
     <int:transformer ref="messagePayloadTransformer" /> <!-- byte[] to String -->

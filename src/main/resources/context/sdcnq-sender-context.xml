@@ -60,7 +60,7 @@
   <int:channel id="senderDiscardChannel" />
 
   <int:exception-type-router input-channel="failedSenderMessages" default-output-channel="invalidMessageChannel">
-    <int:mapping exception-type="ptv.feed.sdc.soccer.api.delegate.InfrastructureException" channel="senderRequeueChannel" />
+    <int:mapping exception-type="ptv.feed.sdc.sender.exceptions.InfrastructureException" channel="senderRequeueChannel" />
   </int:exception-type-router>
 
   <int:chain id="senderRequeueChain" input-channel="senderRequeueChannel" output-channel="senderRequeueConditionalMarshallingChannel">
