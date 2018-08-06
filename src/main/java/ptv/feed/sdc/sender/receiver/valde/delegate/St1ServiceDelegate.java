@@ -1,4 +1,4 @@
-package ptv.feed.sdc.sender.valde.delegate;
+package ptv.feed.sdc.sender.receiver.valde.delegate;
 
 import ptv.feed.sdc.sender.exceptions.InfrastructureException;
 import ptv.feed.sdc.sender.exceptions.ServiceException;

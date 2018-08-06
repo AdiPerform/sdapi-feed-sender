@@ -70,11 +70,6 @@ public class CloudSenderConfigurer implements ApplicationContextAware, Initializ
   /** The cloud http server to binding map */
   private transient Map<String, String> cloudBindings;
 
-  /*
-   * (non-Javadoc)
-   *
-   * @see org.springframework.context.Lifecycle#start()
-   */
   @Override
   public void start() {
     if (!running) {
@@ -83,11 +78,6 @@ public class CloudSenderConfigurer implements ApplicationContextAware, Initializ
     running = true;
   }
 
-  /*
-   * (non-Javadoc)
-   *
-   * @see org.springframework.context.Lifecycle#stop()
-   */
   @Override
   public void stop() {
     if (running) {
@@ -96,9 +86,6 @@ public class CloudSenderConfigurer implements ApplicationContextAware, Initializ
     running = false;
   }
 
-  /**
-   * Stop sender contexts.
-   */
   private void stopSenderContexts() {
     for (final Map.Entry<URI, ConfigurableApplicationContext> entry : senderContexts.entrySet()) {
       final URI cloudUrl = entry.getKey();
@@ -113,21 +100,11 @@ public class CloudSenderConfigurer implements ApplicationContextAware, Initializ
     }
   }
 
-  /*
-   * (non-Javadoc)
-   *
-   * @see org.springframework.context.Lifecycle#isRunning()
-   */
   @Override
   public boolean isRunning() {
     return running;
   }
 
-  /*
-   * (non-Javadoc)
-   *
-   * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
-   */
   @Override
   public void afterPropertiesSet() throws Exception {
     checkNotNull(senderContextPath);
@@ -137,9 +114,6 @@ public class CloudSenderConfigurer implements ApplicationContextAware, Initializ
     checkNotNull(cloudUrls);
   }
 
-  /**
-   * Start sender contexts.
-   */
   private void startSenderContexts() {
     LOGGER.info("Starting sender contexts");
     senderContexts = new HashMap<>();
@@ -155,12 +129,6 @@ public class CloudSenderConfigurer implements ApplicationContextAware, Initializ
     running = true;
   }
 
-  /**
-   * Sets the environment for sender.
-   *
-   * @param ctx the ctx
-   * @param cloudUrl the cloud url
-   */
   private void setEnvironmentForSender(final ConfigurableApplicationContext ctx, final URI cloudUrl) {
     final StandardEnvironment env = new StandardEnvironment();
     final Properties props = new Properties();
@@ -187,23 +155,11 @@ public class CloudSenderConfigurer implements ApplicationContextAware, Initializ
     return senderContexts;
   }
 
-  /*
-   * (non-Javadoc)
-   *
-   * @see org.springframework.context.ApplicationContextAware#setApplicationContext(org.springframework.context.
-   * ApplicationContext)
-   */
   @Override
   public void setApplicationContext(final ApplicationContext applicationContext) throws BeansException {
     this.parentApplicationContext = applicationContext;
   }
 
-  /**
-   * Sets the cloud urls.
-   *
-   * @param urls the new cloud urls
-   * @throws URISyntaxException the uri syntax exception
-   */
   public void setCloudUrls(final String[] urls) throws URISyntaxException {
     checkNotNull(urls);
     checkArgument(urls.length > 0);
@@ -213,85 +169,40 @@ public class CloudSenderConfigurer implements ApplicationContextAware, Initializ
     }
   }
 
-  /**
-   * Sets the sender context path.
-   *
-   * @param senderContextPath the new sender context path
-   */
   public void setSenderContextPath(final String senderContextPath) {
     this.senderContextPath = senderContextPath;
   }
 
-  /**
-   * Sets the sender context path.
-   *
-   * @param valdeSenderContextPath the new sender context path
-   */
   public void setValdeSenderContextPath(final String valdeSenderContextPath) {
     this.valdeSenderContextPath = valdeSenderContextPath;
   }
 
-  /**
-   * Sets the sender exchange.
-   *
-   * @param senderExchange the new sender exchange
-   */
   public void setSenderExchange(final String senderExchange) {
     this.senderExchange = senderExchange;
   }
 
-  /**
-   * Sets the sender error exchange.
-   *
-   * @param senderExchangeError the new sender exchange
-   */
   public void setSenderExchangeError(final String senderExchangeError) {
     this.senderExchangeError = senderExchangeError;
   }
 
-  /**
-   * Sets the sender queue prefix.
-   *
-   * @param senderQueuePrefix the new sender queue prefix
-   */
   public void setSenderQueuePrefix(final String senderQueuePrefix) {
     this.senderQueuePrefix = senderQueuePrefix;
   }
 
-  /**
-   * Sets the sender error queue exclusive.
-   *
-   * @param senderQueueErrorExclusive the new sender error queue exclusive
-   */
   public void setSenderQueueErrorExclusive(final boolean senderQueueErrorExclusive) {
     this.senderQueueErrorExclusive = senderQueueErrorExclusive;
   }
 
-  /**
-   * Sets the config locations.
-   *
-   * @param configLocations the new config locations
-   */
   public void setConfigLocations(final String[] configLocations) {
     checkNotNull(configLocations);
     checkArgument(configLocations.length > 0);
     this.configLocations = Arrays.copyOf(configLocations, configLocations.length);
   }
 
-  /**
-   * Sets the cloud request connect timeout.
-   *
-   * @param cloudRequestConnectTimeout the new cloud request connect timeout
-   */
   public void setCloudRequestConnectTimeout(final int cloudRequestConnectTimeout) {
     this.cloudRequestConnectTimeout = cloudRequestConnectTimeout;
   }
 
-  /**
-   * Sets the cloud request read timeout.
-   *
-   * @param cloudRequestReadTimeout the new cloud request read timeout
-   */
   public void setCloudRequestReadTimeout(final int cloudRequestReadTimeout) {
     this.cloudRequestReadTimeout = cloudRequestReadTimeout;
   }

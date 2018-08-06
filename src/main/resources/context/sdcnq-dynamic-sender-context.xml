@@ -102,7 +102,7 @@
     <constructor-arg name="requestFactory" ref="requestFactory" />
   </bean>
 
-  <bean id="abstractRestServiceDelegate" class="ptv.feed.sdc.sender.valde.delegate.AbstractRestServiceDelegate" abstract="true">
+  <bean id="abstractRestServiceDelegate" class="ptv.feed.sdc.sender.receiver.valde.delegate.AbstractRestServiceDelegate" abstract="true">
     <constructor-arg name="restTemplate" ref="restTemplate" />
     <constructor-arg name="formatConverter" ref="formatConverterString" />
     <constructor-arg name="url" value="${sender.url}${valde.sender.context.path}" />
@@ -112,5 +112,5 @@
       </list>
     </constructor-arg>
   </bean>
-  <bean id="st1Delegate" class="ptv.feed.sdc.sender.valde.delegate.St1ServiceDelegateImpl" parent="abstractRestServiceDelegate" />
+  <bean id="st1Delegate" class="ptv.feed.sdc.sender.receiver.valde.delegate.St1ServiceDelegateImpl" parent="abstractRestServiceDelegate" />
 </beans>

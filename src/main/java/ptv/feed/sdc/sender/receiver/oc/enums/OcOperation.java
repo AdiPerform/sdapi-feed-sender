@@ -1,4 +1,4 @@
-package ptv.feed.sdc.sender.oc.enums;
+package ptv.feed.sdc.sender.receiver.oc.enums;
 
 public enum OcOperation {
   DELETE("delete");

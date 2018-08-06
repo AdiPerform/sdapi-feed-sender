@@ -1,4 +1,4 @@
-package ptv.feed.sdc.sender.valde.delegate;
+package ptv.feed.sdc.sender.receiver.valde.delegate;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -20,8 +20,8 @@ import java.nio.charset.Charset;
 import java.util.*;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static ptv.feed.sdc.sender.valde.enums.ValdeHeaders.VALDE_HEADERS_PREFIX;
-import static ptv.feed.sdc.sender.valde.enums.ValdeHeaders.VALDE_HEADERS_REGEX;
+import static ptv.feed.sdc.sender.receiver.valde.enums.ValdeHeaders.VALDE_HEADERS_PREFIX;
+import static ptv.feed.sdc.sender.receiver.valde.enums.ValdeHeaders.VALDE_HEADERS_REGEX;
 import static ptv.feed.sdc.shared.api.delegate.AbstractRestServiceDelegate.STAMP_UUID_HDR_NAME;
 
 public abstract class AbstractRestServiceDelegate {

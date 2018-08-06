@@ -4,7 +4,7 @@ import org.springframework.messaging.MessageHeaders;
 
 import java.util.Map;
 
-import static ptv.feed.sdc.sender.oc.enums.OcPushHeaders.OC_TYPE;
+import static ptv.feed.sdc.sender.receiver.oc.enums.OcPushHeaders.OC_TYPE;
 
 public class RoutingResolver {
 
