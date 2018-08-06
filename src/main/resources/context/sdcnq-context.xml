@@ -19,7 +19,6 @@
   <import resource="sdcnq-sender-context.xml" />
   <import resource="sdcnq-error-context.xml" />
   <import resource="sdcnq-tracking-context.xml" />
-  <import resource="sdcnq-jmx-context.xml" />
 
   <!-- OC FEEDS FLOWS -->
   <import resource="feeds/oc/sdcnq-oc-feeds-flows.xml" />

@@ -103,27 +103,8 @@
   <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
     <constructor-arg name="requestFactory" ref="requestFactory" />
   </bean>
-  <bean id="abstractRestServiceDelegateModel" class="ptv.feed.sdc.soccer.api.delegate.AbstractRestServiceDelegate" abstract="true">
-    <constructor-arg name="restTemplate" ref="restTemplate" />
-    <constructor-arg name="formatConverter" ref="formatConverterModel" />
-    <constructor-arg name="url" value="${sender.url}${sender.context.path}" />
-    <constructor-arg name="httpStatusesToRequeue">
-      <list>
-        <value>SERVICE_UNAVAILABLE</value>
-      </list>
-    </constructor-arg>
-  </bean>
-  <bean id="abstractRestServiceDelegateString" class="ptv.feed.sdc.soccer.api.delegate.AbstractRestServiceDelegate" abstract="true">
-    <constructor-arg name="restTemplate" ref="restTemplate" />
-    <constructor-arg name="formatConverter" ref="formatConverterString" />
-    <constructor-arg name="url" value="${sender.url}${sender.context.path}" />
-    <constructor-arg name="httpStatusesToRequeue">
-      <list>
-        <value>SERVICE_UNAVAILABLE</value>
-      </list>
-    </constructor-arg>
-  </bean>
-  <bean id="abstractRestServiceDelegateValde" class="ptv.feed.sdc.soccer.api.delegate.AbstractRestServiceDelegate" abstract="true">
+
+  <bean id="abstractRestServiceDelegate" class="ptv.feed.sdc.sender.valdeFromSoccer.delegate.AbstractRestServiceDelegate" abstract="true">
     <constructor-arg name="restTemplate" ref="restTemplate" />
     <constructor-arg name="formatConverter" ref="formatConverterString" />
     <constructor-arg name="url" value="${sender.url}${valde.sender.context.path}" />
@@ -133,5 +114,5 @@
       </list>
     </constructor-arg>
   </bean>
-  <bean id="st1Delegate" class="ptv.feed.sdc.sender.valdeFromSoccer.delegate.St1ServiceDelegateImpl" parent="abstractRestServiceDelegateValde" />
+  <bean id="st1Delegate" class="ptv.feed.sdc.sender.valdeFromSoccer.delegate.St1ServiceDelegateImpl" parent="abstractRestServiceDelegate" />
 </beans>

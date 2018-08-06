@@ -1,7 +1,6 @@
 package ptv.feed.sdc.sender.routing;
 
 import org.springframework.messaging.MessageHeaders;
-import ptv.feed.sdc.sender.jmx.SendMessagesToValde;
 
 import java.util.Map;
 
@@ -11,12 +10,9 @@ public class RoutingResolver {
 
   private static final String CLOUD_HEADER_KEY = "cloud";
 
-  private SendMessagesToValde sendMessagesToValde;
-
   private Map<String, String> feedRoutings;
 
-  public RoutingResolver(final SendMessagesToValde sendMessagesToValde, final Map<String, String> feedRoutings) {
-    this.sendMessagesToValde = sendMessagesToValde;
+  public RoutingResolver(final Map<String, String> feedRoutings) {
     this.feedRoutings = feedRoutings;
   }
 
@@ -26,19 +22,8 @@ public class RoutingResolver {
     }
 
     String feedCode = headers.get(OC_TYPE.getHeaderName(), String.class);
-    if (!sendMessagesToValde.isEnabled() && Routing.VALDE.getKey().equals(feedRoutings.get(feedCode))) {
-      throw new IllegalArgumentException("Sending to VALDE DISABLED - Message is not allowed to process to VALDE");
-    }
 
-    return (sendMessagesToValde.isEnabled() && feedRoutings.containsKey(feedCode)) ? feedRoutings.get(feedCode) : Routing.SDAPI.getKey();
-  }
-
-  public SendMessagesToValde getSendMessagesToValde() {
-    return sendMessagesToValde;
-  }
-
-  public void setSendMessagesToValde(final SendMessagesToValde sendMessagesToValde) {
-    this.sendMessagesToValde = sendMessagesToValde;
+    return (feedRoutings.containsKey(feedCode)) ? feedRoutings.get(feedCode) : Routing.SDAPI.getKey();
   }
 
   public Map<String, String> getFeedRoutings() {

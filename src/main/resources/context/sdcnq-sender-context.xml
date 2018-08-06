@@ -25,10 +25,7 @@
     <entry key="st1" value="#{T(ptv.feed.sdc.sender.routing.Routing).VALDE.getKey()}"/>
   </util:map>
 
-  <bean id="sendMessagesToValde" class="ptv.feed.sdc.sender.jmx.SendMessagesToValde" />
-
   <bean id="routingResolver" class="ptv.feed.sdc.sender.routing.RoutingResolver">
-    <constructor-arg name="sendMessagesToValde" ref="sendMessagesToValde" />
     <constructor-arg name="feedRoutings" ref="feedRoutings" />
   </bean>
 
