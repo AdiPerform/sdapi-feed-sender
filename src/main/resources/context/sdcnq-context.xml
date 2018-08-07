@@ -23,7 +23,6 @@
   <!-- OC FEEDS FLOWS -->
   <import resource="feeds/sdcnq-oc-feeds-flows.xml" />
 
-
   <!-- External -->
   <import resource="classpath:nq-api-context.xml" />
 

@@ -1,17 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:int="http://www.springframework.org/schema/integration"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.springframework.org/schema/integration
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:int-amqp="http://www.springframework.org/schema/integration/amqp"
+       xmlns:int-xml="http://www.springframework.org/schema/integration/xml"
+       xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xsi:schemaLocation="http://www.springframework.org/schema/integration
   http://www.springframework.org/schema/integration/spring-integration.xsd
   http://www.springframework.org/schema/beans
-  http://www.springframework.org/schema/beans/spring-beans.xsd">
+  http://www.springframework.org/schema/beans/spring-beans.xsd
+  http://www.springframework.org/schema/integration/amqp
+  http://www.springframework.org/schema/integration/amqp/spring-integration-amqp.xsd
+  http://www.springframework.org/schema/integration/xml
+  http://www.springframework.org/schema/integration/xml/spring-integration-xml.xsd
+  http://www.springframework.org/schema/rabbit
+  http://www.springframework.org/schema/rabbit/spring-rabbit.xsd">
 
   <!--Error handling -->
+  <int:channel id="failedSenderMessages" />
+  <int:channel id="senderRequeueChannel" />
+  <int:channel id="senderRequeueConditionalMarshallingChannel" />
+  <int:channel id="senderRequeueOutboundChannel" />
+  <int:channel id="senderDiscardChannel" />
+
+  <int:exception-type-router input-channel="failedSenderMessages" default-output-channel="invalidMessageChannel">
+    <int:mapping exception-type="ptv.feed.sdc.sender.exceptions.InfrastructureException" channel="senderRequeueChannel" />
+  </int:exception-type-router>
+
+  <int:chain id="senderRequeueChain" input-channel="senderRequeueChannel" output-channel="senderRequeueConditionalMarshallingChannel">
+    <int:service-activator ref="messageLogger" method="logAndUnwrap" />
+  </int:chain>
+  <!-- conditional marshalling only for feeds which do not pass string though the flow -->
+  <int:chain id="senderRequeueConditionalMarshallingChain" input-channel="senderRequeueConditionalMarshallingChannel" output-channel="senderRequeueOutboundChannel">
+    <int:filter expression="!payload.class.canonicalName.equals('java.lang.String')" discard-channel="senderRequeueOutboundChannel"/>
+    <int-xml:marshalling-transformer marshaller="dtoOxm" result-type="StringResult" />
+    <int:object-to-string-transformer />
+  </int:chain>
+
+  <int:chain id="senderRequeueOutboundChain" input-channel="senderRequeueOutboundChannel">
+    <int:transformer ref="senderMessageRequeingHeadersTransformer" />
+    <int:filter ref="senderMessageRequeingFilter" method="isValidForRequeue" discard-channel="senderDiscardChannel" />
+    <int-amqp:outbound-channel-adapter amqp-template="senderRabbitTemplate"
+                                       exchange-name="${exc.sender.error}"
+                                       mapped-request-headers="oc_*,sdc_*,X-*,stamp_uuid,last_updated,content-type,__TypeId__,json__TypeId__,http_*,sender_*,amqp_expiration"
+                                       routing-key-expression="headers.cloud" />
+  </int:chain>
+
+  <int:chain id="senderDiscardChain" input-channel="senderDiscardChannel">
+    <int-amqp:outbound-channel-adapter amqp-template="senderRabbitTemplate"
+                                       exchange-name="${exc.sender.error}"
+                                       mapped-request-headers="oc_*,sdc_*,X-*,stamp_uuid,last_updated,content-type,__TypeId__,json__TypeId__,http_*,sender_*"
+                                       routing-key-expression="headers.cloud + '.death'" />
+  </int:chain>
+
+  <rabbit:template id="senderRabbitTemplate" connection-factory="sdcnqConsumerConnectionFactory" />
+
+  <bean id="senderMessageRequeingHeadersTransformer" class="ptv.feed.sdc.sender.messaging.RabbitMessageRequeuingHeadersTransformer">
+    <constructor-arg name="requeueCountHeaderName" value="sender_msg_requeue_count" />
+    <constructor-arg name="expirationTimeHeaderName" value="sender_msg_expiration_time" />
+    <constructor-arg name="messageExpirationInitialTime" value="${sender.message.expiration.initial.time}" />
+    <constructor-arg name="messageExpirationTimeFactor" value="${sender.message.expiration.time.factor}" />
+  </bean>
+
+  <bean id="senderMessageRequeingFilter" class="ptv.feed.sdc.sender.messaging.RabbitMessageRequeuingFilter">
+    <constructor-arg name="requeueCountHeaderName" value="sender_msg_requeue_count" />
+    <constructor-arg name="maxRequeueCount" value="${sender.max.requeue.count}" />
+  </bean>
+
   <int:publish-subscribe-channel id="invalidMessageChannel" />
 
   <int:service-activator id="errorLogger" input-channel="invalidMessageChannel"
-    output-channel="remove-message-from-store-channel" ref="messageLogger" method="logAndUnwrap" />
+                         output-channel="remove-message-from-store-channel" ref="messageLogger" method="logAndUnwrap" />
 
   <bean id="messageLogger" class="ptv.feed.sdc.sender.error.MessageLogger"/>
+
 
 </beans>

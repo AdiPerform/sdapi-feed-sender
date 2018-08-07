@@ -3,6 +3,7 @@ package ptv.feed.sdc.sender.receiver.valde.delegate;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.RestTemplate;
 import ptv.feed.sdc.sender.messaging.FormatConverter;
+import ptv.feed.sdc.sender.receiver.AbstractRestServiceDelegate;
 import ptv.feed.sdc.sender.receiver.valde.enums.ValdeHeaders;
 import ptv.feed.sdc.sender.exceptions.InfrastructureException;
 import ptv.feed.sdc.sender.exceptions.ServiceException;

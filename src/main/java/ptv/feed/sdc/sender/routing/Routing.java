@@ -3,8 +3,7 @@ package ptv.feed.sdc.sender.routing;
 public enum Routing {
 
   SDAPI("SDAPI"),
-  VALDE("VALDE"),
-  ALL_CLOUDS("ALL_CLOUDS");
+  VALDE("VALDE");
 
   private final String key;
 

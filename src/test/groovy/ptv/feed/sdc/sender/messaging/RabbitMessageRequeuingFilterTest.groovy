@@ -14,7 +14,7 @@ class RabbitMessageRequeuingFilterTest extends Specification{
     given:
     def msg = aMsg(MAX_REQUEUE_COUNT - 1)
     when:
-    def result = objectUnderTest.isEligibleForRequeue(msg)
+    def result = objectUnderTest.isValidForRequeue(msg)
     then:
     result
   }
@@ -23,7 +23,7 @@ class RabbitMessageRequeuingFilterTest extends Specification{
     given:
     def msg = aMsg(MAX_REQUEUE_COUNT)
     when:
-    def result = objectUnderTest.isEligibleForRequeue(msg)
+    def result = objectUnderTest.isValidForRequeue(msg)
     then:
     result
   }
@@ -32,7 +32,7 @@ class RabbitMessageRequeuingFilterTest extends Specification{
     given:
     def msg = aMsg(MAX_REQUEUE_COUNT + 1)
     when:
-    def result = objectUnderTest.isEligibleForRequeue(msg)
+    def result = objectUnderTest.isValidForRequeue(msg)
     then:
     !result
   }

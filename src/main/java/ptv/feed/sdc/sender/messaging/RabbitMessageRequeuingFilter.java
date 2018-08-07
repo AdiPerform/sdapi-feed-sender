@@ -24,7 +24,7 @@ public class RabbitMessageRequeuingFilter {
     this.maxRequeueCount = maxRequeueCount;
   }
 
-  public boolean isEligibleForRequeue(Message<?> message) {
+  public boolean isValidForRequeue(Message<?> message) {
     int requeueCount = (int) message.getHeaders().get(requeueCountHeaderName);
     String stampUuid = message.getHeaders().getOrDefault(STAMP_UUID, "").toString();
 

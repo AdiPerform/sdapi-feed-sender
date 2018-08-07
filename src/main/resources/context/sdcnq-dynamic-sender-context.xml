@@ -100,7 +100,9 @@
     <constructor-arg name="requestFactory" ref="requestFactory" />
   </bean>
 
-  <bean id="abstractRestServiceDelegate" class="ptv.feed.sdc.sender.receiver.valde.delegate.AbstractRestServiceDelegate" abstract="true">
+
+
+  <bean id="abstractRestServiceDelegate" class="ptv.feed.sdc.sender.receiver.AbstractRestServiceDelegate" abstract="true">
     <constructor-arg name="restTemplate" ref="restTemplate" />
     <constructor-arg name="formatConverter" ref="formatConverterString" />
     <constructor-arg name="url" value="${sender.url}${valde.sender.context.path}" />

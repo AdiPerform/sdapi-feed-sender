@@ -1,4 +1,4 @@
-package ptv.feed.sdc.sender.receiver.valde.delegate;
+package ptv.feed.sdc.sender.receiver;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
