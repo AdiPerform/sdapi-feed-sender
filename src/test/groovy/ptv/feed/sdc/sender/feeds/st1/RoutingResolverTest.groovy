@@ -6,11 +6,9 @@ import ptv.feed.sdc.sender.receiver.oc.enums.OcPushHeaders
 import ptv.feed.sdc.sender.routing.Routing
 import ptv.feed.sdc.sender.routing.RoutingResolver
 import spock.lang.Specification
-import spock.lang.Unroll
 
 class RoutingResolverTest extends Specification {
 
-  @Unroll
   def 'should resolve Valde routing key when ST1 feed is routed to VALDE'() {
     given:
     Map<String, String> headers = new HashMap<>();
@@ -29,21 +27,40 @@ class RoutingResolverTest extends Specification {
     resoultRouting == Routing.VALDE.getKey()
   }
 
-  def 'should throw exception when feeds is binded to VALDE and valde sending is turned off'() {
+  def 'should throw exception when no routings configuration is empty'() {
     given:
     Map<String, String> headers = new HashMap<>();
     headers.put(OcPushHeaders.OC_TYPE.getHeaderName(), Feed.ST1.getName())
     MessageHeaders messageHeaders = new MessageHeaders(headers)
 
     Map<String, String> feedRoutings = new HashMap<>()
-    feedRoutings.put(Feed.ST1.getName(), Routing.SDAPI.getKey())
 
     RoutingResolver routingResolver = new RoutingResolver(feedRoutings)
 
     when:
-    routingResolver.getRouting(messageHeaders)
+    def resoultRouting = routingResolver.getRouting(messageHeaders)
 
     then:
     thrown(IllegalArgumentException)
   }
+
+  def 'should throw exception when no routing is provided for MA2 feed'() {
+    given:
+    Map<String, String> headers = new HashMap<>();
+    headers.put(OcPushHeaders.OC_TYPE.getHeaderName(), Feed.MA2.getName())
+    MessageHeaders messageHeaders = new MessageHeaders(headers)
+
+    Map<String, String> feedRoutings = new HashMap<>()
+    feedRoutings.put(Feed.ST1.getName(), Routing.VALDE.getKey())
+
+    RoutingResolver routingResolver = new RoutingResolver(feedRoutings)
+
+    when:
+    def resoultRouting = routingResolver.getRouting(messageHeaders)
+
+    then:
+    thrown(IllegalArgumentException)
+  }
+
+
 }

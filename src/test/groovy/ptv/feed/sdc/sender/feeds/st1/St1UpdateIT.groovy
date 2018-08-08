@@ -14,7 +14,6 @@ import ptv.feed.sdc.sender.routing.RoutingResolver
 import ptv.feed.sdc.sender.spec.ValdeConsumerBaseSpecification
 import ptv.feed.sdc.sender.spring.LifecycleSupportingXmlContextLoader
 import ptv.feed.sdc.shared.test.rabbit.dsl.ValdeMqSpecification
-import spock.lang.Unroll
 
 import java.time.Instant
 
@@ -24,7 +23,6 @@ class St1UpdateIT extends ValdeConsumerBaseSpecification {
 
   private static final Instant TEST_INSTANT_LAST_MODIFIED = Instant.parse('2017-03-23T09:59:13Z')
   private static final String TEST_LAST_MODIFIED_TIMESTAMP = TEST_INSTANT_LAST_MODIFIED.toEpochMilli()
-  private static final String TEST_UUID = '178419384713871293871293'
 
   @Value('${exc.oc.soccer}')
   String exchange
@@ -67,11 +65,10 @@ class St1UpdateIT extends ValdeConsumerBaseSpecification {
   }
 
 
-  @Unroll
-  def 'should send single POST with ST1 feed when feed is binded to #routing'() {
+  def 'should send single POST with ST1 feed when feed is binded to VALDE'() {
     given:
     Map<String,String> feedRoutings = new HashMap();
-    feedRoutings.put(Feed.ST1.getName(), routing)
+    feedRoutings.put(Feed.ST1.getName(), Routing.VALDE.getKey())
     routingResolver.setFeedRoutings(feedRoutings)
 
     String payload = 'payload'
@@ -100,7 +97,6 @@ class St1UpdateIT extends ValdeConsumerBaseSpecification {
         assert receivedRequests.every { it.method == 'POST' }
       }
     }
-    where: routing << [Routing.ALL_CLOUDS.getKey(), Routing.SDAPI.getKey()]
   }
 
 }

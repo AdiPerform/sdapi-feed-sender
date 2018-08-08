@@ -23,7 +23,12 @@ public class RoutingResolver {
 
     String feedCode = headers.get(OC_TYPE.getHeaderName(), String.class);
 
-    return (feedRoutings.containsKey(feedCode)) ? feedRoutings.get(feedCode) : Routing.SDAPI.getKey();
+    if(feedRoutings.containsKey(feedCode)){
+      return feedRoutings.get(feedCode);
+    }
+    else{
+      throw new IllegalArgumentException("Unsupported routing for feed: " + feedCode);
+    }
   }
 
   public Map<String, String> getFeedRoutings() {
