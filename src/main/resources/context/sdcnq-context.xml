@@ -15,6 +15,7 @@
 
   <!-- Internal -->
   <import resource="sdcnq-commons-context.xml" />
+  <import resource="sdcnq-oxm-context.xml" />
   <import resource="rabbit/sdcnq-rabbit-context.xml" />
   <import resource="sdcnq-sender-context.xml" />
   <import resource="sdcnq-error-context.xml" />

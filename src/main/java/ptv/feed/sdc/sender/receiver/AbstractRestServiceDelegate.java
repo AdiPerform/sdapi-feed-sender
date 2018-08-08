@@ -22,12 +22,13 @@ import java.util.*;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static ptv.feed.sdc.sender.receiver.valde.enums.ValdeHeaders.VALDE_HEADERS_PREFIX;
 import static ptv.feed.sdc.sender.receiver.valde.enums.ValdeHeaders.VALDE_HEADERS_REGEX;
-import static ptv.feed.sdc.shared.api.delegate.AbstractRestServiceDelegate.STAMP_UUID_HDR_NAME;
 
 public abstract class AbstractRestServiceDelegate {
 
   /** Logger. */
   private static final Logger LOGGER = LoggerFactory.getLogger(AbstractRestServiceDelegate.class);
+
+  public static final String STAMP_UUID_HDR_NAME = "stamp-uuid";
 
   private static final String VALDE_CONTENT = "content";
 

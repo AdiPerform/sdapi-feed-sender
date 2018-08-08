@@ -32,7 +32,6 @@
   <!-- conditional marshalling only for feeds which do not pass string though the flow -->
   <int:chain id="senderRequeueConditionalMarshallingChain" input-channel="senderRequeueConditionalMarshallingChannel" output-channel="senderRequeueOutboundChannel">
     <int:filter expression="!payload.class.canonicalName.equals('java.lang.String')" discard-channel="senderRequeueOutboundChannel"/>
-    <int-xml:marshalling-transformer marshaller="dtoOxm" result-type="StringResult" />
     <int:object-to-string-transformer />
   </int:chain>
 

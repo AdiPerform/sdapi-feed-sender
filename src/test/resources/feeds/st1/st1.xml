@@ -1,0 +1,374 @@
+<SoccerFeed game_data="2016-03-20 16:00:00" competition_id="8" competition_name="English Premier League" game_id="803467" home_team_id="43" home_team_name="Manchester City" away_team_id="1" away_team_name="Manchester United" TimeStamp="20160320T1733+0000">
+  <Snapshot Type="MatchSummary">
+    <MatchInfo MatchType="Regular" Timestamp="20170728T1142+0000" Weather="Clear" Period="FullTime">
+      <Attendance>54557</Attendance>
+      <Date>20160320T1600+0000</Date>
+      <Result Type="NormalResult" Winner="t1"/>
+    </MatchInfo>
+    <ScoreData Score="0" Side="Home" TeamRef="t43"/>
+    <ScoreData Score="1" Side="Away" TeamRef="t1">
+      <Goal EventID="1091649956" EventNumber="1151" Period="FirstHalf" PlayerRef="p176297" Time="15" TimeStamp="20160320T1615+0000" Type="Goal" uID="g1-1">
+        <Assist PlayerRef="p43670">p43670</Assist>
+      </Goal>
+    </ScoreData>
+  </Snapshot>
+  <Snapshot Type="Match Info">
+    <Stat Type="possession_percentage" Home="54.5" Away="45.5"/>
+    <Stat Type="duel_won" Home="76" Away="58"/>
+    <Stat Type="aerial_won" Home="24" Away="10"/>
+    <Stat Type="interception" Home="24" Away="17"/>
+    <Stat Type="total_offside" Home="2" Away="1"/>
+    <Stat Type="corner_taken" Home="11" Away="5"/>
+    <Stat Type="goals" Home="0" Away="1"/>
+    <Stat Type="ontarget_scoring_att" Home="3" Away="4"/>
+    <Stat Type="post_scoring_att" Home="1" Away="0"/>
+    <Stat Type="shot_off_target" Home="16" Away="0"/>
+    <Stat Type="total_scoring_att" Home="26" Away="5"/>
+    <Stat Type="blocked_scoring_att" Home="7" Away="1"/>
+    <Stat Type="total_pass" Home="454" Away="398"/>
+    <Stat Type="accurate_pass" Home="372" Away="299"/>
+    <Stat Type="accurate_cross" Home="16" Away="2"/>
+    <Stat Type="total_cross" Home="32" Away="12"/>
+    <Stat Type="touches_in_opp_box" Home="46" Away="13"/>
+  </Snapshot>
+  <Snapshot Type="Action Areas">
+    <Away>28.4</Away>
+    <Home>21.0</Home>
+    <Middle>50.6</Middle>
+  </Snapshot>
+  <Snapshot Type="Attacking Zones">
+    <Home>
+      <Left>45.4</Left>
+      <Right>24.2</Right>
+      <Middle>30.5</Middle>
+    </Home>
+    <Away>
+      <Left>27.8</Left>
+      <Right>41.5</Right>
+      <Middle>30.7</Middle>
+    </Away>
+  </Snapshot>
+  <Snapshot Type="Average Position">
+    <Team uID="t43">
+      <Player Position="Goalkeeper" uID="p15749" x="9.12" y="50.42"/>
+      <Player Position="Defender" uID="p37748" x="44.95" y="14.93"/>
+      <Player Position="Defender" uID="p15312" x="32.11" y="25.08"/>
+      <Player Position="Defender" uID="p17336" x="46.05" y="81.52"/>
+      <Player Position="Defender" uID="p57112" x="33.93" y="66.17"/>
+      <Player Position="Midfielder" uID="p27789" x="44.25" y="35.77"/>
+      <Player Position="Midfielder" uID="p20664" x="62.90" y="53.19"/>
+      <Player Position="Midfielder" uID="p103955" x="61.05" y="78.56"/>
+      <Player Position="Midfielder" uID="p17740" x="63.18" y="16.96"/>
+      <Player Position="Midfielder" uID="p14664" x="59.69" y="44.09"/>
+      <Player Position="Forward" uID="p37572" x="70.43" y="45.90"/>
+      <Player Position="Substitute" uID="p52538" x="47.32" y="34.29"/>
+      <Player Position="Substitute" uID="p57001" x="65.44" y="35.12"/>
+      <Player Position="Substitute" uID="p20310" x="8.54" y="44.64"/>
+    </Team>
+    <Team uID="t1">
+      <Player Position="Goalkeeper" uID="p51940" x="7.88" y="49.52"/>
+      <Player Position="Defender" uID="p55909" x="32.31" y="36.97"/>
+      <Player Position="Defender" uID="p40002" x="43.78" y="33.66"/>
+      <Player Position="Defender" uID="p58893" x="53.97" y="90.46"/>
+      <Player Position="Defender" uID="p58877" x="31.60" y="69.34"/>
+      <Player Position="Midfielder" uID="p148225" x="63.41" y="79.30"/>
+      <Player Position="Midfielder" uID="p109322" x="54.36" y="46.15"/>
+      <Player Position="Midfielder" uID="p2404" x="39.44" y="51.18"/>
+      <Player Position="Midfielder" uID="p43670" x="47.24" y="42.28"/>
+      <Player Position="Midfielder" uID="p42774" x="52.90" y="66.68"/>
+      <Player Position="Forward" uID="p176297" x="69.56" y="57.05"/>
+      <Player Position="Substitute" uID="p15208" x="43.00" y="49.09"/>
+      <Player Position="Substitute" uID="p20695" x="40.75" y="13.27"/>
+      <Player Position="Substitute" uID="p201084" x="23.07" y="86.43"/>
+    </Team>
+  </Snapshot>
+  <Snapshot Type="Player Focus">
+    <MatchPlayer PlayerRef="p20664" Position="Midfielder">
+      <Stat Type="index_score">91.01</Stat>
+      <Stat Type="mins_played">90</Stat>
+      <Stat Type="touches">80</Stat>
+      <Stat Type="total_pass">57</Stat>
+      <Stat Type="accurate_pass">52</Stat>
+      <Stat Type="goals">0</Stat>
+      <Stat Type="goal_assist">0</Stat>
+      <Stat Type="fouls">0</Stat>
+      <Stat Type="was_fouled">2</Stat>
+      <Stat Type="yellow_card">0</Stat>
+      <Stat Type="red_card">0</Stat>
+      <Stat Type="ontarget_scoring_att">0</Stat>
+      <Stat Type="post_scoring_att">0</Stat>
+      <Stat Type="shot_off_target">0</Stat>
+      <Stat Type="total_scoring_att">0</Stat>
+      <Stat Type="blocked_scoring_att">0</Stat>
+      <Stat Type="touches_in_opp_box">4</Stat>
+      <Stat Type="accurate_cross">5</Stat>
+      <Stat Type="total_cross">11</Stat>
+    </MatchPlayer>
+    <MatchPlayer PlayerRef="p176297" Position="Forward">
+      <Stat Type="index_score">87.11</Stat>
+      <Stat Type="mins_played">90</Stat>
+      <Stat Type="touches">29</Stat>
+      <Stat Type="total_pass">10</Stat>
+      <Stat Type="accurate_pass">10</Stat>
+      <Stat Type="goals">1</Stat>
+      <Stat Type="goal_assist">0</Stat>
+      <Stat Type="fouls">0</Stat>
+      <Stat Type="was_fouled">1</Stat>
+      <Stat Type="yellow_card">0</Stat>
+      <Stat Type="red_card">0</Stat>
+      <Stat Type="ontarget_scoring_att">1</Stat>
+      <Stat Type="post_scoring_att">0</Stat>
+      <Stat Type="shot_off_target">0</Stat>
+      <Stat Type="total_scoring_att">2</Stat>
+      <Stat Type="blocked_scoring_att">1</Stat>
+      <Stat Type="touches_in_opp_box">5</Stat>
+      <Stat Type="accurate_cross">0</Stat>
+      <Stat Type="total_cross">1</Stat>
+    </MatchPlayer>
+  </Snapshot>
+  <Team uID="t43">
+    <Country>England</Country>
+    <Name>Manchester City</Name>
+    <Player uID="p15749" Position="Goalkeeper">
+      <PersonName>
+        <First>Joe</First>
+        <Last>Hart</Last>
+      </PersonName>
+    </Player>
+    <Player uID="p37748" Position="Defender">
+      <PersonName>
+        <First>Bacary</First>
+        <Last>Sagna</Last>
+      </PersonName>
+    </Player>
+    <Player uID="p15312" Position="Defender">
+      <PersonName>
+        <First>Martín</First>
+        <Last>Demichelis</Last>
+      </PersonName>
+    </Player>
+    <Player uID="p17336" Position="Defender">
+      <PersonName>
+        <First>Gaël</First>
+        <Last>Clichy</Last>
+      </PersonName>
+    </Player>
+    <Player uID="p57112" Position="Defender">
+      <PersonName>
+        <First>Eliaquim</First>
+        <Last>Mangala</Last>
+      </PersonName>
+    </Player>
+    <Player uID="p27789" Position="Midfielder">
+      <PersonName>
+        <First>Fernando</First>
+        <Known>Fernandinho</Known>
+        <Last>Luiz Rosa</Last>
+      </PersonName>
+    </Player>
+    <Player uID="p20664" Position="Midfielder">
+      <PersonName>
+        <First>David</First>
+        <Last>Silva</Last>
+      </PersonName>
+    </Player>
+    <Player uID="p103955" Position="Midfielder">
+      <PersonName>
+        <First>Raheem</First>
+        <Last>Sterling</Last>
+      </PersonName>
+    </Player>
+    <Player uID="p17740" Position="Midfielder">
+      <PersonName>
+        <First>Jesús</First>
+        <Last>Navas</Last>
+      </PersonName>
+    </Player>
+    <Player uID="p14664" Position="Midfielder">
+      <PersonName>
+        <First>Gnegneri Yaya</First>
+        <Known>Yaya Touré</Known>
+        <Last>Touré</Last>
+      </PersonName>
+    </Player>
+    <Player uID="p37572" Position="Forward">
+      <PersonName>
+        <First>Sergio</First>
+        <Last>Agüero</Last>
+      </PersonName>
+    </Player>
+    <Player uID="p42593" Position="Substitute">
+      <PersonName>
+        <First>Aleksandar</First>
+        <Last>Kolarov</Last>
+      </PersonName>
+    </Player>
+    <Player uID="p52538" Position="Substitute">
+      <PersonName>
+        <First>Fernando Francisco</First>
+        <Known>Fernando</Known>
+        <Last>Reges</Last>
+      </PersonName>
+    </Player>
+    <Player uID="p57001" Position="Substitute">
+      <PersonName>
+        <First>Wilfried</First>
+        <Last>Bony</Last>
+      </PersonName>
+    </Player>
+    <Player uID="p20658" Position="Substitute">
+      <PersonName>
+        <First>Pablo</First>
+        <Last>Zabaleta</Last>
+      </PersonName>
+    </Player>
+    <Player uID="p20310" Position="Substitute">
+      <PersonName>
+        <First>Willy</First>
+        <Last>Caballero</Last>
+      </PersonName>
+    </Player>
+    <Player uID="p173515" Position="Substitute">
+      <PersonName>
+        <First>Kelechi</First>
+        <Last>Iheanacho</Last>
+      </PersonName>
+    </Player>
+    <Player uID="p175352" Position="Substitute">
+      <PersonName>
+        <First>Manuel</First>
+        <Known>Manu García</Known>
+        <Last>Garcia Alonso</Last>
+      </PersonName>
+    </Player>
+    <TeamOfficial uID="man37974" Type="Manager">
+      <PersonName>
+        <First>Josep</First>
+        <Last>Guardiola</Last>
+      </PersonName>
+    </TeamOfficial>
+  </Team>
+  <Team uID="t1">
+    <Country>England</Country>
+    <Name>Manchester United</Name>
+    <Player uID="p51940" Position="Goalkeeper">
+      <PersonName>
+        <First>David</First>
+        <Last>de Gea</Last>
+      </PersonName>
+    </Player>
+    <Player uID="p55909" Position="Defender">
+      <PersonName>
+        <First>Chris</First>
+        <Last>Smalling</Last>
+      </PersonName>
+    </Player>
+    <Player uID="p40002" Position="Defender">
+      <PersonName>
+        <First>Matteo</First>
+        <Last>Darmian</Last>
+      </PersonName>
+    </Player>
+    <Player uID="p58893" Position="Defender">
+      <PersonName>
+        <First>Marcos</First>
+        <Last>Rojo</Last>
+      </PersonName>
+    </Player>
+    <Player uID="p58877" Position="Defender">
+      <PersonName>
+        <First>Daley</First>
+        <Last>Blind</Last>
+      </PersonName>
+    </Player>
+    <Player uID="p148225" Position="Midfielder">
+      <PersonName>
+        <First>Anthony</First>
+        <Last>Martial</Last>
+      </PersonName>
+    </Player>
+    <Player uID="p109322" Position="Midfielder">
+      <PersonName>
+        <First>Jesse</First>
+        <Last>Lingard</Last>
+      </PersonName>
+    </Player>
+    <Player uID="p2404" Position="Midfielder">
+      <PersonName>
+        <First>Michael</First>
+        <Last>Carrick</Last>
+      </PersonName>
+    </Player>
+    <Player uID="p43670" Position="Midfielder">
+      <PersonName>
+        <First>Juan</First>
+        <Last>Mata</Last>
+      </PersonName>
+    </Player>
+    <Player uID="p42774" Position="Midfielder">
+      <PersonName>
+        <First>Morgan</First>
+        <Last>Schneiderlin</Last>
+      </PersonName>
+    </Player>
+    <Player uID="p176297" Position="Forward">
+      <PersonName>
+        <First>Marcus</First>
+        <Last>Rashford</Last>
+      </PersonName>
+    </Player>
+    <Player uID="p154976" Position="Substitute">
+      <PersonName>
+        <First>Adnan</First>
+        <Last>Januzaj</Last>
+      </PersonName>
+    </Player>
+    <Player uID="p15208" Position="Substitute">
+      <PersonName>
+        <First>Bastian</First>
+        <Last>Schweinsteiger</Last>
+      </PersonName>
+    </Player>
+    <Player uID="p20695" Position="Substitute">
+      <PersonName>
+        <First>Luis Antonio</First>
+        <Known>Antonio Valencia</Known>
+        <Last>Valencia</Last>
+      </PersonName>
+    </Player>
+    <Player uID="p106824" Position="Substitute">
+      <PersonName>
+        <First>Memphis</First>
+        <Last>Depay</Last>
+      </PersonName>
+    </Player>
+    <Player uID="p41184" Position="Substitute">
+      <PersonName>
+        <First>Marouane</First>
+        <Last>Fellaini</Last>
+      </PersonName>
+    </Player>
+    <Player uID="p42899" Position="Substitute">
+      <PersonName>
+        <First>Sergio</First>
+        <Last>Romero</Last>
+      </PersonName>
+    </Player>
+    <Player uID="p201084" Position="Substitute">
+      <PersonName>
+        <First>Timothy</First>
+        <Last>Fosu-Mensah</Last>
+      </PersonName>
+    </Player>
+    <TeamOfficial uID="man134" Type="Manager">
+      <PersonName>
+        <First>José</First>
+        <Last>Mourinho</Last>
+      </PersonName>
+    </TeamOfficial>
+  </Team>
+  <Venue uID="v2691">
+    <Country>England</Country>
+    <Name>Etihad Stadium</Name>
+  </Venue>
+</SoccerFeed>

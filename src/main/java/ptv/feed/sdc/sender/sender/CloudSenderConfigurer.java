@@ -22,7 +22,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class CloudSenderConfigurer implements ApplicationContextAware, InitializingBean, Lifecycle {
 
-  /** The Constant LOGGER. */
   private static final Logger LOGGER = LoggerFactory.getLogger(CloudSenderConfigurer.class);
 
   /** The Constant DEFAULT_QUEUE_NAME_PREFIX. */

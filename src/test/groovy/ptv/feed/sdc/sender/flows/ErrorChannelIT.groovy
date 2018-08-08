@@ -1,35 +1,44 @@
 package ptv.feed.sdc.sender.flows
 
+import com.performfeeds.enums.Format
 import org.springframework.amqp.core.Message
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.ContextConfiguration
-import ptv.feed.sdc.sender.spec.ConsumerBaseSpecificationOc
+import ptv.feed.sa.api.enums.Feed
+import ptv.feed.sdc.sender.receiver.oc.enums.OcPushHeaders
+import ptv.feed.sdc.sender.receiver.valde.enums.ValdeHeaders
+import ptv.feed.sdc.sender.spec.ValdeConsumerBaseSpecification
 import ptv.feed.sdc.sender.spring.LifecycleSupportingXmlContextLoader
 
+import java.time.Instant
 
 @ContextConfiguration(locations = ["classpath*:/context/sdcnq-test-application-context.xml"], loader = LifecycleSupportingXmlContextLoader)
 @ActiveProfiles("dev")
-class ErrorChannelIT extends ConsumerBaseSpecificationOc {
+class ErrorChannelIT extends ValdeConsumerBaseSpecification {
 
-  @Value('${routing.key.F13}')
-  String f13RoutingKey
+  private static final Instant TEST_INSTANT_LAST_MODIFIED = Instant.parse("2015-10-30T12:11:32Z")
+  private static final String TEST_LAST_MODIFIED_TIMESTAMP = TEST_INSTANT_LAST_MODIFIED.toEpochMilli()
+
+  @Value('${routing.key.st1}')
+  String st1RoutingKey
 
   def 'should catch bad message and send it to error channel'() {
     given:
     Message msg = messageBuilder
         .asString("Invalid payload")
-        .withHeader(OptaPushHeaders.X_META_MATCH_UUID.getHeaderName(), TEST_MATCH_ID)
-        .withHeader(OptaPushHeaders.X_META_LAST_UPDATED.getHeaderName(), "Sun Jul 13 17:18:19 BST 2014")
-        .withHeader(OptaPushHeaders.X_META_FEED_TYPE.getHeaderName(), "F13")
-        .withHeader(OptaPushHeaders.X_META_GAME_ID.getHeaderName(), TEST_MATCH_ID)
+        .withHeader(OcPushHeaders.OC_TYPE.getHeaderName(), Feed.ST1.getName())
+        .withHeader(OcPushHeaders.OC_TIMESTAMP.getHeaderName(), TEST_LAST_MODIFIED_TIMESTAMP)
+        .withHeader(OcPushHeaders.OC_FORMAT.getHeaderName(), Format.XML.getName())
+        .withHeader(ValdeHeaders.VALDE_GAME_ID.getHeaderName(), 324123)
+        .withHeader(ValdeHeaders.VALDE_FEED_TYPE.getHeaderName(), "ST1")
         .build()
 
     when:
     rabbit
         .withTemplate(rabbitTemplate)
-        .withExchange(optaBridgeExchange)
-        .withRoutingKey(f13RoutingKey)
+        .withExchange("exc.sdc.oc}")
+        .withRoutingKey(st1RoutingKey)
         .send(msg)
 
     then:

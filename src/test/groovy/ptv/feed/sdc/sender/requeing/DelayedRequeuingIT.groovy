@@ -2,17 +2,16 @@ package ptv.feed.sdc.sender.requeing
 
 import com.performfeeds.enums.Format
 import org.springframework.amqp.core.Message
-import org.springframework.amqp.rabbit.core.RabbitTemplate
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.messaging.support.ErrorMessage
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.ContextConfiguration
-import ptv.feed.sdc.shared.api.util.ResourceUtils
+import ptv.feed.sa.api.enums.Feed
 import ptv.feed.sdc.sender.receiver.oc.enums.OcPushHeaders
-import ptv.feed.sdc.sender.spec.ConsumerBaseSpecification
+import ptv.feed.sdc.sender.receiver.valde.enums.ValdeHeaders
+import ptv.feed.sdc.sender.spec.ValdeConsumerBaseSpecification
 import ptv.feed.sdc.sender.spring.LifecycleSupportingXmlContextLoader
+import ptv.feed.sdc.shared.api.util.ResourceUtils
 
 import java.time.Instant
 
@@ -21,21 +20,17 @@ import static ptv.feed.sdc.sender.messaging.MessageStamper.STAMP_UUID_HEADER
 
 @ContextConfiguration(locations = ["classpath*:/context/sdcnq-test-application-context.xml"], loader = LifecycleSupportingXmlContextLoader)
 @ActiveProfiles("dev")
-class DelayedRequeuingIT extends ConsumerBaseSpecification {
+class DelayedRequeuingIT extends ValdeConsumerBaseSpecification {
 
   private static final Instant TEST_INSTANT_LAST_MODIFIED = Instant.parse("2015-10-30T12:11:32Z")
   private static final String TEST_LAST_MODIFIED_TIMESTAMP = TEST_INSTANT_LAST_MODIFIED.toEpochMilli()
 
   final STAMP_UUID = '123'
 
-  @Autowired
-  @Qualifier("testSdcnqRabbitTemplate")
-  RabbitTemplate rabbitTemplate
-
   @Value('${exc.sdc.oc}')
   String exchange
 
-  @Value('${routing.oc.soccer.playercareer}')
+  @Value('${routing.oc.soccer.st1}')
   String routingKey
 
   def cleanup() {
@@ -51,20 +46,19 @@ class DelayedRequeuingIT extends ConsumerBaseSpecification {
     }
 
     and:
-    String payload = ResourceUtils.getResourceAsString("feeds/oc/playercareer/oc_player_career.xml")
+    String payload = ResourceUtils.getResourceAsString("feeds/st1/st1.xml")
     Message msg = messageBuilder
-            .asString(payload)
-            .withHeader(OcPushHeaders.OC_TIMESTAMP.getHeaderName(), TEST_LAST_MODIFIED_TIMESTAMP)
-            .withHeader(OcPushHeaders.OC_FORMAT.getHeaderName(), Format.XML.getName())
-            .withHeader(STAMP_UUID_HEADER, STAMP_UUID)
-            .build()
-
+        .asString(payload)
+        .withHeader(OcPushHeaders.OC_TYPE.getHeaderName(), Feed.ST1.getName())
+        .withHeader(OcPushHeaders.OC_TIMESTAMP.getHeaderName(), TEST_LAST_MODIFIED_TIMESTAMP)
+        .withHeader(OcPushHeaders.OC_FORMAT.getHeaderName(), Format.XML.getName())
+        .withHeader(ValdeHeaders.VALDE_GAME_ID.getHeaderName(), 324123)
+        .withHeader(ValdeHeaders.VALDE_FEED_TYPE.getHeaderName(), "ST1")
+        .build()
     when:
-    rabbit
-            .withTemplate(rabbitTemplate)
-            .withExchange(exchange)
-            .withRoutingKey(routingKey)
-            .send(msg)
+    rabbit.withExchange(exchange)
+          .withRoutingKey(routingKey)
+          .send(msg)
 
     then:
     http {
