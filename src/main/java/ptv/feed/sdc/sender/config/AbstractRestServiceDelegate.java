@@ -1,27 +1,23 @@
-package ptv.feed.sdc.sender.receiver;
+package ptv.feed.sdc.sender.config;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
-import org.springframework.http.converter.FormHttpMessageConverter;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
-import ptv.feed.sdc.sender.messaging.FormatConverter;
 import ptv.feed.sdc.sender.exceptions.InfrastructureException;
 import ptv.feed.sdc.sender.exceptions.ServiceException;
+import ptv.feed.sdc.sender.messaging.FormatConverter;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static ptv.feed.sdc.sender.receiver.valde.enums.ValdeHeaders.VALDE_HEADERS_PREFIX;
-import static ptv.feed.sdc.sender.receiver.valde.enums.ValdeHeaders.VALDE_HEADERS_REGEX;
 
 public abstract class AbstractRestServiceDelegate {
 
@@ -30,7 +26,7 @@ public abstract class AbstractRestServiceDelegate {
 
   public static final String STAMP_UUID_HDR_NAME = "stamp-uuid";
 
-  private static final String VALDE_CONTENT = "content";
+
 
   /** Default content type. */
   private static final MediaType DEFAULT_CONTENT_TYPE = new MediaType("application", "xml", Charset.forName("UTF-8"));
@@ -92,53 +88,7 @@ public abstract class AbstractRestServiceDelegate {
     return executeHttpRequest(HttpMethod.POST, newHttpBody(body, headers), resourcePattern, args);
   }
 
-  /**
-   * Executes HTTP VALDE POST request.
-   */
-  protected ResponseEntity<String> postToValde(final String body, Map<String, String> headers)
-      throws ServiceException,
-      InfrastructureException {
-    MultiValueMap<String, String> entityBody = createHttpEntityBody(body, headers);
 
-    HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(entityBody, null);
-    return executeValdeHttpPost(HttpMethod.POST, request);
-  }
-
-  private MultiValueMap<String, String> createHttpEntityBody(final String body, Map<String, String> headers) {
-    MultiValueMap<String, String> requestVariables = new LinkedMultiValueMap<>();
-    requestVariables.add(VALDE_CONTENT, formatConverter.convert(body));
-
-    headers.forEach((key, value) -> {
-      if(key.startsWith(VALDE_HEADERS_PREFIX)){
-        requestVariables.add(key.replaceFirst(VALDE_HEADERS_REGEX, ""), value);
-      }
-    });
-
-    return requestVariables;
-  }
-
-  private ResponseEntity<String> executeValdeHttpPost(final HttpMethod method, final HttpEntity<MultiValueMap<String, String>> requestEntity) throws ServiceException,
-      InfrastructureException {
-    try {
-      final String requestUrl = url.toString();
-      LOGGER.debug("Executing http request url: {} method: {}", requestUrl, method);
-
-      restTemplate.getMessageConverters().add(new FormHttpMessageConverter());
-      final ResponseEntity<String> response = restTemplate.postForEntity(requestUrl, requestEntity, String.class);
-      if(HttpStatus.OK.value() == response.getStatusCode().value()){
-        String valdeId = StringUtils.substringBetween(response.getBody(), "</div>{\"id\":\"", "\",\"version\"");
-        LOGGER.info("Created Valde document id: {}", valdeId);
-      }
-      return response;
-    } catch (final ResourceAccessException e) {
-      throw new InfrastructureException(e);
-    } catch (final HttpStatusCodeException e) {
-      if (httpStatusesToRequeue.contains(e.getStatusCode())) {
-        throw new InfrastructureException(e);
-      }
-      throw new ServiceException(e);
-    }
-  }
 
   /**
    * Executes PUT request.

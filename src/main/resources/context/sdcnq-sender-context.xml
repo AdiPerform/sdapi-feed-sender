@@ -19,14 +19,14 @@
   </bean>
 
   <util:map id="feedRoutings">
-    <entry key="st1" value="#{T(ptv.feed.sdc.sender.routing.Routing).VALDE.getKey()}"/>
+    <entry key="st1" value="#{T(ptv.feed.sdc.sender.config.Routing).VALDE.getKey()}"/>
   </util:map>
 
-  <bean id="routingResolver" class="ptv.feed.sdc.sender.routing.RoutingResolver">
+  <bean id="routingResolver" class="ptv.feed.sdc.sender.config.RoutingResolver">
     <constructor-arg name="feedRoutings" ref="feedRoutings" />
   </bean>
 
-  <bean id="cloudSenderConfigurer" class="ptv.feed.sdc.sender.sender.CloudSenderConfigurer">
+  <bean id="cloudSenderConfigurer" class="ptv.feed.sdc.sender.config.CloudSenderConfigurer">
     <property name="cloudUrls" value="#{httpCloudAddressesProvider.getAddress()}" />
     <property name="senderContextPath" value="${cloud.context.path}" />
     <property name="valdeSenderContextPath" value="${valde.cloud.context.path}" />

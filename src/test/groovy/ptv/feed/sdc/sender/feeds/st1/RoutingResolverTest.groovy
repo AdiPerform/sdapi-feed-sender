@@ -2,9 +2,9 @@ package ptv.feed.sdc.sender.feeds.st1
 
 import org.springframework.messaging.MessageHeaders
 import ptv.feed.sa.api.enums.Feed
-import ptv.feed.sdc.sender.receiver.oc.enums.OcPushHeaders
-import ptv.feed.sdc.sender.routing.Routing
-import ptv.feed.sdc.sender.routing.RoutingResolver
+import ptv.feed.sdc.sender.optacore.OcPushHeaders
+import ptv.feed.sdc.sender.config.Routing
+import ptv.feed.sdc.sender.config.RoutingResolver
 import spock.lang.Specification
 
 class RoutingResolverTest extends Specification {

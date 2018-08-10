@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.ContextConfiguration
 import ptv.feed.sa.api.enums.Feed
-import ptv.feed.sdc.sender.receiver.oc.enums.OcPushHeaders
-import ptv.feed.sdc.sender.receiver.valde.enums.ValdeHeaders
+import ptv.feed.sdc.sender.optacore.OcPushHeaders
+import ptv.feed.sdc.sender.valde.enums.ValdeHeaders
 import ptv.feed.sdc.sender.spec.ValdeConsumerBaseSpecification
 import ptv.feed.sdc.sender.spring.LifecycleSupportingXmlContextLoader
 
@@ -20,13 +20,16 @@ class ErrorChannelIT extends ValdeConsumerBaseSpecification {
   private static final Instant TEST_INSTANT_LAST_MODIFIED = Instant.parse("2015-10-30T12:11:32Z")
   private static final String TEST_LAST_MODIFIED_TIMESTAMP = TEST_INSTANT_LAST_MODIFIED.toEpochMilli()
 
-  @Value('${routing.key.st1}')
-  String st1RoutingKey
+  @Value('${exc.oc.soccer}')
+  String exchange
+
+  @Value('${routing.oc.soccer.st1}')
+  String rabbitRoutingKey
 
   def 'should catch bad message and send it to error channel'() {
     given:
     Message msg = messageBuilder
-        .asString("Invalid payload")
+        .asString("invalidPayload")
         .withHeader(OcPushHeaders.OC_TYPE.getHeaderName(), Feed.ST1.getName())
         .withHeader(OcPushHeaders.OC_TIMESTAMP.getHeaderName(), TEST_LAST_MODIFIED_TIMESTAMP)
         .withHeader(OcPushHeaders.OC_FORMAT.getHeaderName(), Format.XML.getName())
@@ -37,8 +40,8 @@ class ErrorChannelIT extends ValdeConsumerBaseSpecification {
     when:
     rabbit
         .withTemplate(rabbitTemplate)
-        .withExchange("exc.sdc.oc}")
-        .withRoutingKey(st1RoutingKey)
+        .withExchange(exchange)
+        .withRoutingKey(rabbitRoutingKey)
         .send(msg)
 
     then:

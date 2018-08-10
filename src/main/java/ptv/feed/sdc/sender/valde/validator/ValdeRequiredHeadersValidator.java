@@ -1,12 +1,12 @@
-package ptv.feed.sdc.sender.receiver.valde.validator;
+package ptv.feed.sdc.sender.valde.validator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.integration.annotation.Filter;
 import org.springframework.messaging.Message;
 import ptv.feed.sdc.sender.messaging.MessageStamper;
-import ptv.feed.sdc.sender.receiver.oc.enums.OcPushHeaders;
-import ptv.feed.sdc.sender.receiver.valde.enums.ValdeHeaders;
+import ptv.feed.sdc.sender.optacore.OcPushHeaders;
+import ptv.feed.sdc.sender.valde.enums.ValdeHeaders;
 
 import java.util.Set;
 

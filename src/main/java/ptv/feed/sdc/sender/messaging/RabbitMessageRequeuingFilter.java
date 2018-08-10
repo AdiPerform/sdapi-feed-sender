@@ -9,7 +9,7 @@ import java.util.Optional;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static ptv.feed.sdc.sender.error.MessageLogger.logInfo;
-import static ptv.feed.sdc.sender.receiver.oc.enums.IntegrationFlowHeaders.STAMP_UUID;
+import static ptv.feed.sdc.sender.optacore.IntegrationFlowHeaders.STAMP_UUID;
 
 
 public class RabbitMessageRequeuingFilter {

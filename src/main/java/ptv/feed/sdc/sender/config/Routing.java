@@ -1,8 +1,9 @@
-package ptv.feed.sdc.sender.routing;
+package ptv.feed.sdc.sender.config;
 
 public enum Routing {
 
   SDAPI("SDAPI"),
+  OPTA("OPTA"),
   VALDE("VALDE");
 
   private final String key;

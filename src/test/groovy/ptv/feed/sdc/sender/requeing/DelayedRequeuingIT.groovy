@@ -1,14 +1,15 @@
 package ptv.feed.sdc.sender.requeing
 
 import com.performfeeds.enums.Format
+import org.junit.Ignore
 import org.springframework.amqp.core.Message
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.messaging.support.ErrorMessage
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.ContextConfiguration
 import ptv.feed.sa.api.enums.Feed
-import ptv.feed.sdc.sender.receiver.oc.enums.OcPushHeaders
-import ptv.feed.sdc.sender.receiver.valde.enums.ValdeHeaders
+import ptv.feed.sdc.sender.optacore.OcPushHeaders
+import ptv.feed.sdc.sender.valde.enums.ValdeHeaders
 import ptv.feed.sdc.sender.spec.ValdeConsumerBaseSpecification
 import ptv.feed.sdc.sender.spring.LifecycleSupportingXmlContextLoader
 import ptv.feed.sdc.shared.api.util.ResourceUtils
@@ -20,6 +21,7 @@ import static ptv.feed.sdc.sender.messaging.MessageStamper.STAMP_UUID_HEADER
 
 @ContextConfiguration(locations = ["classpath*:/context/sdcnq-test-application-context.xml"], loader = LifecycleSupportingXmlContextLoader)
 @ActiveProfiles("dev")
+@Ignore
 class DelayedRequeuingIT extends ValdeConsumerBaseSpecification {
 
   private static final Instant TEST_INSTANT_LAST_MODIFIED = Instant.parse("2015-10-30T12:11:32Z")
@@ -27,20 +29,17 @@ class DelayedRequeuingIT extends ValdeConsumerBaseSpecification {
 
   final STAMP_UUID = '123'
 
-  @Value('${exc.sdc.oc}')
+  @Value('${exc.oc.soccer}')
   String exchange
 
   @Value('${routing.oc.soccer.st1}')
-  String routingKey
+  String rabbitRoutingKey
 
-  def cleanup() {
-    printMessageHistory()
-  }
 
   def "should requeue message until response code is 503"() {
     given:
     http {
-      onRequestIn("/sdc") {
+      onRequestIn("/dove/feed") {
         sendResponse(SERVICE_UNAVAILABLE.value(), SERVICE_UNAVAILABLE.reasonPhrase)
       }
     }
@@ -56,9 +55,11 @@ class DelayedRequeuingIT extends ValdeConsumerBaseSpecification {
         .withHeader(ValdeHeaders.VALDE_FEED_TYPE.getHeaderName(), "ST1")
         .build()
     when:
-    rabbit.withExchange(exchange)
-          .withRoutingKey(routingKey)
-          .send(msg)
+    rabbit
+        .withTemplate(rabbitTemplate)
+        .withExchange(exchange)
+        .withRoutingKey(rabbitRoutingKey)
+        .send(msg)
 
     then:
     http {

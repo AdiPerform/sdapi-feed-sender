@@ -1,10 +1,10 @@
-package ptv.feed.sdc.sender.routing;
+package ptv.feed.sdc.sender.config;
 
 import org.springframework.messaging.MessageHeaders;
 
 import java.util.Map;
 
-import static ptv.feed.sdc.sender.receiver.oc.enums.OcPushHeaders.OC_TYPE;
+import static ptv.feed.sdc.sender.optacore.OcPushHeaders.OC_TYPE;
 
 public class RoutingResolver {
 

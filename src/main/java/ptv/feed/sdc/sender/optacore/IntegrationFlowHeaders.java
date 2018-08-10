@@ -1,4 +1,4 @@
-package ptv.feed.sdc.sender.receiver.oc.enums;
+package ptv.feed.sdc.sender.optacore;
 
 public class IntegrationFlowHeaders {
 

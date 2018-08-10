@@ -18,7 +18,7 @@
 
   <!-- Override properties for tests -->
   <context:property-placeholder location="config/amqp/rabbit.properties" ignore-unresolvable="true" order="0" />  
-  
+
   <!--below import allows logging spring-integration details in tests, its not used in main config-->
   <import resource="sdcnq-test-tracking-context.xml"/>
   

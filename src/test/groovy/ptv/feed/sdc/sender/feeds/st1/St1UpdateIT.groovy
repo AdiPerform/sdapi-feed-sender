@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.ContextConfiguration
 import ptv.feed.sa.api.enums.Feed
-import ptv.feed.sdc.sender.receiver.oc.enums.OcPushHeaders
-import ptv.feed.sdc.sender.receiver.valde.enums.ValdeHeaders
-import ptv.feed.sdc.sender.routing.Routing
-import ptv.feed.sdc.sender.routing.RoutingResolver
+import ptv.feed.sdc.sender.optacore.OcPushHeaders
+import ptv.feed.sdc.sender.valde.enums.ValdeHeaders
+import ptv.feed.sdc.sender.config.Routing
+import ptv.feed.sdc.sender.config.RoutingResolver
 import ptv.feed.sdc.sender.spec.ValdeConsumerBaseSpecification
 import ptv.feed.sdc.sender.spring.LifecycleSupportingXmlContextLoader
 import ptv.feed.sdc.shared.test.rabbit.dsl.ValdeMqSpecification

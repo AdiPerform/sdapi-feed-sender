@@ -1,4 +1,4 @@
-package ptv.feed.sdc.sender.sender;
+package ptv.feed.sdc.sender.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
