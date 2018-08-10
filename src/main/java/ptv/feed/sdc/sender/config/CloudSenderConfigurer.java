@@ -46,9 +46,6 @@ public class CloudSenderConfigurer implements ApplicationContextAware, Initializ
   private transient String senderExchangeError;
 
   /** The sender context path. */
-  private transient String senderContextPath;
-
-  /** The sender context path. */
   private transient String valdeSenderContextPath;
 
   /** The sender queue prefix. */
@@ -106,7 +103,6 @@ public class CloudSenderConfigurer implements ApplicationContextAware, Initializ
 
   @Override
   public void afterPropertiesSet() throws Exception {
-    checkNotNull(senderContextPath);
     checkNotNull(valdeSenderContextPath);
     checkNotNull(senderExchange);
     checkNotNull(senderExchangeError);
@@ -135,7 +131,6 @@ public class CloudSenderConfigurer implements ApplicationContextAware, Initializ
     props.setProperty("sender.host", cloudUrl.getHost());
     props.setProperty("sender.exchange", senderExchange);
     props.setProperty("sender.exchange.error", senderExchangeError);
-    props.setProperty("sender.context.path", senderContextPath);
     props.setProperty("valde.sender.context.path", valdeSenderContextPath);
     props.setProperty("sender.queue", senderQueuePrefix + cloudUrl.getHost());
     props.setProperty("sender.queue.error", senderQueuePrefix + cloudUrl.getHost() + ".error");
@@ -166,10 +161,6 @@ public class CloudSenderConfigurer implements ApplicationContextAware, Initializ
     for (final String url : urls) {
       cloudUrls.add(new URI(url));
     }
-  }
-
-  public void setSenderContextPath(final String senderContextPath) {
-    this.senderContextPath = senderContextPath;
   }
 
   public void setValdeSenderContextPath(final String valdeSenderContextPath) {

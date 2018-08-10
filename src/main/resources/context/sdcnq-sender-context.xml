@@ -28,7 +28,6 @@
 
   <bean id="cloudSenderConfigurer" class="ptv.feed.sdc.sender.config.CloudSenderConfigurer">
     <property name="cloudUrls" value="#{httpCloudAddressesProvider.getAddress()}" />
-    <property name="senderContextPath" value="${cloud.context.path}" />
     <property name="valdeSenderContextPath" value="${valde.cloud.context.path}" />
     <property name="senderExchange" value="${exc.sender}" />
     <property name="senderExchangeError" value="${exc.sender.error}" />
