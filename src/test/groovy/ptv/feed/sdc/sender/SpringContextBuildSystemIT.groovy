@@ -15,7 +15,7 @@ import spock.lang.Specification
 class SpringContextBuildSystemIT extends Specification {
 
   @Autowired
-  @Qualifier("sdcnqRabbitAdmin")
+  @Qualifier("ocRabbitAdmin")
   RabbitAdmin rabbitAdmin
 
   def 'context should start without any errors'(){

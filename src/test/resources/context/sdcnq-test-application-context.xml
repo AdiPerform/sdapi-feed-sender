@@ -38,7 +38,6 @@
   <bean id="aMQPAddressesProvider" class="ptv.feed.sdc.sender.config.EmbeddedAMQPAddressesProvider" />
   <bean id="httpCloudAddressesProvider" class="ptv.feed.sdc.sender.config.TestHttpCloudAddressesProviderImpl" />
 
-  <rabbit:template id="testSdcnqRabbitTemplate" connection-factory="sdcnqConsumerConnectionFactory" />
   <rabbit:template id="testOcRabbitTemplate" connection-factory="ocConsumerConnectionFactory" />
 
   <import resource="sdsnq-test-qpid-dead-letter-bridges-context.xml"/>

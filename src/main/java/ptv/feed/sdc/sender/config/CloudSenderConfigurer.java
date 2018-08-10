@@ -25,7 +25,7 @@ public class CloudSenderConfigurer implements ApplicationContextAware, Initializ
   private static final Logger LOGGER = LoggerFactory.getLogger(CloudSenderConfigurer.class);
 
   /** The Constant DEFAULT_QUEUE_NAME_PREFIX. */
-  private static final String DEFAULT_QUEUE_NAME_PREFIX = "que.sdc.sender.";
+  private static final String DEFAULT_QUEUE_NAME_PREFIX = "que.sender.";
 
   /** The config locations. */
   private transient String[] configLocations;

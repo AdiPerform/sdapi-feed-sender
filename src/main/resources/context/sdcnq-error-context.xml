@@ -51,7 +51,7 @@
                                        routing-key-expression="headers.cloud + '.death'" />
   </int:chain>
 
-  <rabbit:template id="senderRabbitTemplate" connection-factory="sdcnqConsumerConnectionFactory" />
+  <rabbit:template id="senderRabbitTemplate" connection-factory="ocConsumerConnectionFactory" />
 
   <bean id="senderMessageRequeingHeadersTransformer" class="ptv.feed.sdc.sender.messaging.RabbitMessageRequeuingHeadersTransformer">
     <constructor-arg name="requeueCountHeaderName" value="sender_msg_requeue_count" />

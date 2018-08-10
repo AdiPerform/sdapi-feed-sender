@@ -14,8 +14,8 @@
                           http://www.springframework.org/schema/beans
                           http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-  <int-amqp:inbound-channel-adapter id="st1Adapter" queue-names="${que.sdc.oc.st1}"
-                                    connection-factory="sdcnqConsumerConnectionFactory" acknowledge-mode="AUTO"
+  <int-amqp:inbound-channel-adapter id="st1Adapter" queue-names="${que.sender.soccer.st1}"
+                                    connection-factory="ocConsumerConnectionFactory" acknowledge-mode="AUTO"
                                     mapped-request-headers="valde_*,oc_*,X-*,stamp_uuid,last_updated,amqp_receivedRoutingKey"
                                     channel="st1Channel" error-channel="invalidMessageChannel"/>
 
