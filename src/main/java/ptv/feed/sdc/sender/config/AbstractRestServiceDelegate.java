@@ -21,23 +21,18 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public abstract class AbstractRestServiceDelegate {
 
-  /** Logger. */
   private static final Logger LOGGER = LoggerFactory.getLogger(AbstractRestServiceDelegate.class);
 
   public static final String STAMP_UUID_HDR_NAME = "stamp-uuid";
 
-
-
-  /** Default content type. */
   private static final MediaType DEFAULT_CONTENT_TYPE = new MediaType("application", "xml", Charset.forName("UTF-8"));
 
-  /** Rest template. */
   private transient final RestTemplate restTemplate;
 
   /** URL to be requested. */
   private URL url;
 
-  /** Format XLM or use String approach */
+  /** Format XML or use String approach */
   private transient FormatConverter formatConverter;
 
   private final List<HttpStatus> httpStatusesToRequeue;
@@ -52,17 +47,6 @@ public abstract class AbstractRestServiceDelegate {
     this.url = url;
   }
 
-  /**
-   * Executes POST request.
-   *
-   * @param <T> the generic type
-   * @param body request body
-   * @param resourcePattern request pattern for placeholders substitutions
-   * @param args arguments for placeholders substitutions
-   * @return response object of he request
-   * @throws ServiceException the service exception
-   * @throws InfrastructureException the infrastructure exception
-   */
   protected <T> ResponseEntity<String> post(final T body, final String resourcePattern, final Object... args)
       throws ServiceException,
       InfrastructureException {

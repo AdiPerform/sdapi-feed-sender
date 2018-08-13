@@ -24,19 +24,19 @@ class St1UpdateIT extends ValdeConsumerBaseSpecification {
   private static final Instant TEST_INSTANT_LAST_MODIFIED = Instant.parse('2017-03-23T09:59:13Z')
   private static final String TEST_LAST_MODIFIED_TIMESTAMP = TEST_INSTANT_LAST_MODIFIED.toEpochMilli()
 
-  @Value('${exc.oc.soccer}')
+  @Value('${exc.feed.sender}')
   String exchange
-  @Value('${routing.oc.soccer.st1}')
+  @Value('${routing.sender.soccer.st1}')
   String rabbitRoutingKey
 
   @Autowired
   RoutingResolver routingResolver
 
 
-  def 'should not send POST to SDAPI when ST1 feed is bind to VALDE'() {
+  def 'should not send POST to VALDE when ST1 feed is bind to SDAPI'() {
     given:
     Map<String,String> feedRoutings = new HashMap();
-    feedRoutings.put(Feed.ST1.getName(), Routing.VALDE.getKey())
+    feedRoutings.put(Feed.ST1.getName(), Routing.SDAPI.getKey())
     routingResolver.setFeedRoutings(feedRoutings)
 
     String payload = 'payload'
@@ -45,6 +45,7 @@ class St1UpdateIT extends ValdeConsumerBaseSpecification {
         .withHeader(OcPushHeaders.OC_TYPE.getHeaderName(), Feed.ST1.getName())
         .withHeader(OcPushHeaders.OC_TIMESTAMP.getHeaderName(), TEST_LAST_MODIFIED_TIMESTAMP)
         .withHeader(OcPushHeaders.OC_FORMAT.getHeaderName(), Format.XML.getName())
+        .withHeader(OcPushHeaders.OC_STAMP.getHeaderName(), "cn23en923etx7t78g7n8")
         .withHeader(ValdeHeaders.VALDE_GAME_ID.getHeaderName(), 324123)
         .withHeader(ValdeHeaders.VALDE_FEED_TYPE.getHeaderName(), "ST1")
         .build()
@@ -77,6 +78,7 @@ class St1UpdateIT extends ValdeConsumerBaseSpecification {
         .withHeader(OcPushHeaders.OC_TYPE.getHeaderName(), Feed.ST1.getName())
         .withHeader(OcPushHeaders.OC_TIMESTAMP.getHeaderName(), TEST_LAST_MODIFIED_TIMESTAMP)
         .withHeader(OcPushHeaders.OC_FORMAT.getHeaderName(), Format.XML.getName())
+        .withHeader(OcPushHeaders.OC_STAMP.getHeaderName(), "cr234c02rh2r2r2r232")
         .withHeader(ValdeHeaders.VALDE_GAME_ID.getHeaderName(), 324123)
         .withHeader(ValdeHeaders.VALDE_FEED_TYPE.getHeaderName(), "ST1")
         .build()

@@ -9,10 +9,6 @@ public class AddressProviderImpl implements AddressProvider {
     return address;
   }
 
-  /**
-   * @param address
-   *          the address to set
-   */
   public void setAddress(final String address) {
     this.address = address;
   }

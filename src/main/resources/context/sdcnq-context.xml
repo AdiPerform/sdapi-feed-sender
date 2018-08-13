@@ -8,8 +8,6 @@
 
   <context:property-placeholder location="classpath:/config/sdcnq.properties"
     ignore-unresolvable="true" />
-  <context:property-placeholder location="classpath:/config/sdcnq-oc.properties"
-    ignore-unresolvable="true" />
   <context:property-placeholder location="classpath:/sdcnq-external.properties"
     ignore-unresolvable="true" />
 
@@ -22,7 +20,7 @@
   <import resource="sdcnq-tracking-context.xml" />
 
   <!-- OC FEEDS FLOWS -->
-  <import resource="feeds/sdcnq-oc-feeds-flows.xml" />
+  <import resource="feeds/sdcnq-feeds-flows.xml" />
 
   <!-- External -->
   <import resource="classpath:nq-api-context.xml" />

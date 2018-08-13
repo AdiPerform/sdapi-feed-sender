@@ -33,7 +33,7 @@ public class ValdeRestServiceImpl implements ValdeRestService {
   /** URL to be requested. */
   private URL url;
 
-  /** Format XLM or use String approach */
+  /** Format XML or use String approach */
   private transient FormatConverter formatConverter;
 
   private transient final RestTemplate restTemplate;
@@ -60,7 +60,6 @@ public class ValdeRestServiceImpl implements ValdeRestService {
     postToValde(feed, headers);
     logInfo(feed, "Updated ST1 feed for game id: {}", headers.get(ValdeHeaders.VALDE_GAME_ID.getHeaderName()));
   }
-
 
   /**
    * Executes HTTP VALDE POST request.

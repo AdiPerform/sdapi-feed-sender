@@ -7,7 +7,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public final class SDCNQRunner {
 
-  /** Logger. */
   private static final Logger LOGGER = LoggerFactory.getLogger(SDCNQRunner.class);
 
   /** Spring active profile properties. */

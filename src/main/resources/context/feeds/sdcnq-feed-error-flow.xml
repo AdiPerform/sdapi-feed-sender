@@ -37,10 +37,8 @@
   <int:channel id="ocRequeueOriginalChannel" />
 
   <int-amqp:outbound-channel-adapter channel="ocRequeueOriginalChannel" amqp-template="ocRequeueRabbitTemplate"
-    exchange-name="${exc.opta.sender.dead.letter}" mapped-request-headers="oc_*,sdc_*,stamp_uuid" routing-key-expression="headers.amqp_receivedRoutingKey" />
-
+    exchange-name="${exc.feed.sender.dead.letter}" mapped-request-headers="oc_*,sdc_*,stamp_uuid" routing-key-expression="headers.amqp_receivedRoutingKey" />
 
   <rabbit:template id="ocRequeueRabbitTemplate" connection-factory="ocConsumerConnectionFactory" />
-
 
 </beans>

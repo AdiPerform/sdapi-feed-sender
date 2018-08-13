@@ -21,11 +21,9 @@
 
   <rabbit:admin id="ocRabbitAdmin" connection-factory="ocConsumerConnectionFactory"/>
 
-  <!-- TODO: not sure about this to remove or not-->
   <rabbit:template id="ocRabbitTemplate" connection-factory="ocConsumerConnectionFactory" />
 
-
-  <rabbit:topic-exchange name="${exc.opta.sender}" declared-by="ocRabbitAdmin">
+  <rabbit:topic-exchange name="${exc.feed.sender}" declared-by="ocRabbitAdmin">
     <rabbit:bindings>
       <rabbit:binding queue="${que.sender.soccer.st1}" pattern="${routing.sender.soccer.st1}" />
     </rabbit:bindings>

@@ -1,7 +1,6 @@
 package ptv.feed.sdc.sender.requeing
 
 import com.performfeeds.enums.Format
-import org.junit.Ignore
 import org.springframework.amqp.core.Message
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.messaging.support.ErrorMessage
@@ -9,19 +8,17 @@ import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.ContextConfiguration
 import ptv.feed.sa.api.enums.Feed
 import ptv.feed.sdc.sender.optacore.OcPushHeaders
-import ptv.feed.sdc.sender.valde.enums.ValdeHeaders
 import ptv.feed.sdc.sender.spec.ValdeConsumerBaseSpecification
 import ptv.feed.sdc.sender.spring.LifecycleSupportingXmlContextLoader
+import ptv.feed.sdc.sender.valde.enums.ValdeHeaders
 import ptv.feed.sdc.shared.api.util.ResourceUtils
 
 import java.time.Instant
 
 import static org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE
-import static ptv.feed.sdc.sender.messaging.MessageStamper.STAMP_UUID_HEADER
 
 @ContextConfiguration(locations = ["classpath*:/context/sdcnq-test-application-context.xml"], loader = LifecycleSupportingXmlContextLoader)
 @ActiveProfiles("dev")
-@Ignore
 class DelayedRequeuingIT extends ValdeConsumerBaseSpecification {
 
   private static final Instant TEST_INSTANT_LAST_MODIFIED = Instant.parse("2015-10-30T12:11:32Z")
@@ -29,10 +26,10 @@ class DelayedRequeuingIT extends ValdeConsumerBaseSpecification {
 
   final STAMP_UUID = '123'
 
-  @Value('${exc.oc.soccer}')
+  @Value('${exc.feed.sender}')
   String exchange
 
-  @Value('${routing.oc.soccer.st1}')
+  @Value('${routing.sender.soccer.st1}')
   String rabbitRoutingKey
 
 
@@ -72,7 +69,7 @@ class DelayedRequeuingIT extends ValdeConsumerBaseSpecification {
     mq {
       verify {
         message {
-          that instanceof ErrorMessage && that.payload.failedMessage.headers[STAMP_UUID_HEADER] == STAMP_UUID
+          that instanceof ErrorMessage
         }
         visitedChannel("senderRequeueChannel")
         atLeast once

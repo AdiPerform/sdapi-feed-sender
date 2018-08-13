@@ -14,8 +14,8 @@ import static ptv.feed.sdc.sender.error.MessageLogger.logInfo;
 
 
 public class MessageStamper extends SimpleMessageConverter {
-  private static final Logger LOGGER = LoggerFactory.getLogger(MessageStamper.class);
 
+  private static final Logger LOGGER = LoggerFactory.getLogger(MessageStamper.class);
   public static final String STAMP_UUID_HEADER = "stamp_uuid";
 
   public static Optional<String> getStampUuid(final org.springframework.messaging.Message<?> message) {
@@ -24,9 +24,7 @@ public class MessageStamper extends SimpleMessageConverter {
 
   @Override
   public Object fromMessage(final Message message) throws MessageConversionException {
-
     stampAndLogMessage(message);
-
     return super.fromMessage(message);
   }
 
